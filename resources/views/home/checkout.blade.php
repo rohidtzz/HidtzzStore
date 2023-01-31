@@ -157,7 +157,6 @@ body{
     </style>
 @endsection
 @section('content')
-<body >
     {{-- <div id="preloader"></div> --}}
     {{-- <div id="loadingMask" style="width: 100%; height: 100vh; position: fixed;z-index: 999; background:url('{{ asset('blok/f.gif') }}') 50% no-repeat #fff;"></div> --}}
     {{-- <img src="" alt="" srcset=""> --}}
@@ -307,22 +306,34 @@ body{
 			 			<div class="col-md-12 col-lg-12">
 			 				<div class="summary">
 			 					<h3>Summary</h3>
-			 					<div class="summary-item"><span class="text">Subtotal</span><span class="price">Rp.
+			 					<div class="summary-item"><span class="text">Subtotal</span><span  class="price">
+                                    <input type="hidden" name="subtotal" value="{{ $total }}">Rp.
                                     {{ number_format($total) }}
                                 </span></div>
-			 					<div class="summary-item"><span class="text">Fee</span><span class="price">Rp.
+			 					<div class="summary-item"><span class="text">Fee</span><div id="fee" class="price">
 
-                                    {{ number_format($kal[0]->total_fee->customer) }}
+
+                                    {{-- {{ number_format($kal[0]->total_fee->customer) }}
+
                                     {{-- @foreach ($kal[0]->total_fee as $fee)
 
                                     {{ $fee->customer }}
 
                                     @endforeach --}}
-                                </span></div>
+                                </div></div>
                                 {{-- <div class="summary-item"><span class="text">Biaya Pengiriman</span><span class="price" id="pengiriman"></span></div> --}}
-			 					<div class="summary-item"><span class="text">Total</span><span style="font-weight: bold;font-size:25px" id="totall" class="price">
+
+                                <div class="summary-item"><span class="text">Total</span>
+                                    <span style="font-weight: bold;font-size:25px" id="totall" class="price"></span>
+                                </div>
+                                <input type="hidden" name="total" value="1231">
+
+
+
+			 					{{-- <div class="summary-item"><span class="text">Total</span><span style="font-weight: bold;font-size:25px" id="totall" class="price">
                                    Rp. {{ number_format($total+$kal[0]->total_fee->customer) }}</span></div>
-                                <input type="hidden" name="total" value="{{ $total+$kal[0]->total_fee->customer }}">
+                                <input type="hidden" name="total" value="{{ $total+$kal[0]->total_fee->customer }}"> --}}
+
 			 					{{-- <a type="button" href="{{ url('/checkout') }}" class="btn btn-primary btn-lg btn-block">Checkout</a> --}}
 				 			</div>
 			 			</div>
@@ -336,10 +347,6 @@ body{
         <section class="shopping-cart dark">
 
             <div class="container">
-               {{-- <div class="block-heading">
-                 <h2>Shopping Cart</h2>
-                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc quam urna, dignissim nec auctor in, mattis vitae leo.</p>
-               </div> --}}
 
                <div class="content">
                     <div class="row">
@@ -347,48 +354,43 @@ body{
                             <div class="items">
                                 <center><h2 style="margin:2%" class="">Metode Pembayaran</h2></center>
 
-
-
-
                                    <div class="product">
                                        <div class="row d-felx justify-content-center">
-                                        {{-- @foreach ($mas as $channel) --}}
 
                                         <form action="{{ url('transaction/store/') }}" method="post">
-                                           <center><div  class="col-md-3 " style="padding-left: 2%; padding-right:2%">
-                                                @csrf
+                                           <center>
+                                                <div  class="col-md-3 " style="padding-left: 2%; padding-right:2%">
+                                                    @csrf
 
-                                                <input type="hidden"  name="cost" >
-                                                {{-- <input type="hidden" name="product_id" value="{{ $m }}"> --}}
+                                                    {{-- <input type="hidden"  name="cost" > --}}
+
+                                                    <div style="background-color: white; border:none;" type="submit" class="card" >
+
+                                                        <select required name="metode" id="metode" class="form-select" aria-label="Default select example">
+                                                            <option class="text-center" value="0" selected>-- Pilih Metode Pembayaran --</option>
+
+                                                            {{-- @foreach ($paymentData as $metode)
+                                                                <option value="{{ $metode->paymentMethod }}">{{ $metode->paymentName }}</option>
+                                                            @endforeach --}}
+
+                                                        </select>
+                                                        {{-- <img class="card-img-top" src="{{ $mas['icon_url'] }}"> --}}
 
 
-                                                {{-- <input type="hidden" name="method" value="{{ $channel->code }}"> --}}
+                                                        {{-- <div class="card-body">
+                                                            <div class="card-text">
 
-                                                <div style="background-color: white; border:none;" type="submit" class="card" >
-                                                    {{-- <button href="" style="border: none"> --}}
+                                                                <div class="form-check form-check-inline">
+                                                                    <input class="form-check-input" type="hidden" name="method" value="{{ $mas['code'] }}" checked="checked">
 
-                                                    <img class="card-img-top" src="{{ $mas['icon_url'] }}">
-                                                    {{-- </button> --}}
+                                                                    <label class="form-check-label" for="inlineRadio2">bayar dengan {{ $mas['code'] }}</label>
+                                                                </div>
 
-                                                    <div class="card-body">
-                                                        <div class="card-text">
-                                                            {{-- <p></p> --}}
-                                                            <div class="form-check form-check-inline">
-                                                                <input class="form-check-input" type="hidden" name="method" value="{{ $mas['code'] }}" checked="checked">
-
-                                                                <label class="form-check-label" for="inlineRadio2">bayar dengan {{ $mas['code'] }}</label>
-                                                              </div>
-
-                                                        </div>
+                                                            </div>
+                                                        </div> --}}
                                                     </div>
                                                 </div>
-
-
-
-                                            </div></center>
-
-
-                                            {{-- @endforeach --}}
+                                            </center>
 
 
                                        </div>
@@ -401,10 +403,10 @@ body{
 
 
                         <div class="d-flex justify-content-end" >
+                            <input type="hidden" name="totals" >
 
 
-
-                                    <button onclick="return confirm('yakin checkout?');" class="btn btn-primary btn-lg btn-block" >Check out</button>
+                                    <button id="but" hidden onclick="return confirm('yakin checkout?');" class="btn btn-primary btn-lg btn-block" >Check out</button>
                             </form>
 
 
@@ -417,6 +419,122 @@ body{
    <br>
    <br>
    <br>
+   <script>
+
+    $(document).ready(function (){
+        let subtotal = $('input[name=subtotal]').val();
+        // console.log(subtotal)
+        $.ajax({
+            type : 'get',
+            url : '/kalkulator/'+subtotal,
+            success : function(data){
+
+                // console.log(data);
+                // let fee = $('#fee').innerHTML = data;
+
+                // $('#hide').empty();
+
+                $(data).each(function(x,y){
+
+
+                    // console.log(y.category_id)
+                    // result = '<option value="'+ y.paymentMethod +'"> <img src="'+ y.paymentImage +'"></option>';
+                    result = '<option value="'+ y.paymentMethod +'">'+ y.paymentName +'</option>';
+                    $('#metode').append(result);
+                });
+
+                $('#hide').empty();
+
+
+
+            },
+        });
+    });
+
+    // let l = $("select#metode option").filter(":selected").val() ;
+    //     console.log(l);
+
+    $('#metode').on('change', function(){
+        // let l = $('#metode :selected').text() ;
+        // let l = $("select#metode option").filter(":selected").val();
+
+        let subtotal = $('input[name=subtotal]').val();
+        const code = $('#metode').val();
+
+        if(code != 0){
+
+            $.ajax({
+                type : 'get',
+                url : '/kalkulator/'+subtotal,
+                success : function(data){
+
+                    // console.log(data);
+                    // let fee = $('#fee').innerHTML = data;
+
+                    $('#fee').empty();
+                    $('#totall').empty();
+
+                    const rupiah = (number)=>{
+                                    return new Intl.NumberFormat("id-ID", {
+                                    }).format(number);
+                            }
+
+                    $(data).each(function(x,y){
+
+                        if(y.paymentMethod == code){
+
+                            result = `
+                            Rp. ${rupiah(y.totalFee)}
+                            `;
+
+                            let fee = $('#fee').html(result);
+
+                            jumlah = parseInt(y.totalFee)+parseInt(subtotal);
+
+                            result2 = `
+                            Rp. ${rupiah(jumlah)}
+                            `;
+
+                            let total = $('#totall').html(result2);
+
+                            let totals = $('input[name=totals]').val(jumlah);
+                            // console.log(totals);
+                            // console.log(total);
+                            // let total = $('#total').html()
+                        } else {
+
+                        }
+                        // console.log(y.category_id)
+                        // result = '<option value="'+ y.paymentMethod +'"> <img src="'+ y.paymentImage +'"></option>';
+                        // result = '<option value="'+ y.paymentMethod +'">'+ y.paymentName +'</option>';
+                        // $('#metode').append(result);
+                    });
+
+                    // $('#product').empty();
+
+
+
+                },
+            });
+            $("#but").removeAttr("hidden");
+        } else{
+            $('#fee').empty();
+            $('#totall').empty();
+
+            $("#but").attr("hidden",true);
+        }
+
+
+
+    });
+
+    // let total = $('input[name=total]').val();
+    // console.log(total);
+
+    // $('#fee').html("rp");
+
+
+</script>
    {{-- <script>
     $(document).ready(function(){
         let city = $("input[name=city_id]").val();

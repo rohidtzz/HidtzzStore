@@ -12,7 +12,7 @@ use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\TripayCallbackController;
 use App\Http\Controllers\IakCallbackController;
 
-use App\Http\Controllers\ShippingController;
+use App\Http\Controllers\DuitkuController;
 
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\LayananDigitalController;
@@ -77,7 +77,7 @@ Route::group(['middleware' => ['role:user,staff,admin']], function () {
     Route::get('/cart/minus/{id}',[CartController::class,'minus']);
     Route::get('/cart/{id}/create',[CartController::class,'create']);
 
-    Route::get('checkout/',[CheckoutController::class,'index']);
+    Route::get('/checkout',[CheckoutController::class,'index']);
 
     Route::post('/transaction/store/',[TransactionController::class,'store']);
     Route::get('/transaction',[TransactionController::class,'show']);
@@ -104,26 +104,12 @@ Route::group(['middleware' => ['role:user,staff,admin']], function () {
 
     route::post('/transaction/pulsa', [TransactionController::class,'transaction_pulsa']);
 
-    // route::get('alamat',function(){
-    //     return view('alamat');
-    // });
-
-    // route::post('alamat/store',function(Request $request){
-    //     // return view('alamat');
-    //     dd($request->city);
-    // });
-
+    route::get('/kalkulator/{amount}', [DuitkuController::class,'KalkulatorBiaya']);
 
 
 });
-// route::get('/city',[ShippingController::class,'city']);
-// route::get('/city/{id}',[ShippingController::class,'city_id']);
-
-// route::get('/cost',[ShippingContro   ller::class,'cost']);
 
 route::post('/callback/iak', [IakCallbackController::class,'handle']);
-
-route::get('/s', [IakCallbackController::class,'s']);
 
 
 route::post('/callback', [TripayCallbackController::class,'handle']);

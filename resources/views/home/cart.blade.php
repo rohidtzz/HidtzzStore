@@ -77,6 +77,28 @@
         @if (count($product) >= 1)
 
             <div class="row">
+                <div class="col-7 col-sm-7 col-xl-2 col-md-4">
+                    <div class="card" >
+                        <div class="card-body">
+
+
+                                    <form method="get" action="/checkout">
+
+
+
+
+                                    <button type="suby" class="btn btn-primary">Pergi ke CheckOut </button>
+                                    </form>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endif
+        {{-- @if (count($product) >= 1)
+
+            <div class="row">
                 <div class="col-12 col-xl-4 col-md-6">
                     <div class="card" style="margin: 5%">
                         <div class="card-header">
@@ -89,8 +111,8 @@
                                     <form action="checkout/">
                                         <select required  name="code" class="form-select" aria-label="Default select example">
                                             <option class="text-center" selected>-- Pilih Metode Pembayaran --</option>
-                                            @foreach ($mas as $metode)
-                                                <option value="{{ $metode->code }}">{{ $metode->name }}</option>
+                                            @foreach ($paymentData as $metode)
+                                                <option value="{{ $metode->paymentMethod }}">{{ $metode->paymentName }}</option>
                                             @endforeach
 
                                         </select>
@@ -108,7 +130,7 @@
                     </div>
                 </div>
             </div>
-        @endif
+        @endif --}}
 
 
     </div>

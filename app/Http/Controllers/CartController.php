@@ -35,43 +35,28 @@ class CartController extends Controller
 
         }
 
-        $apiKey = env('TRIPAY_API_KEY');
+        // $Duitku = new DuitkuController;
 
-        // $payload = ['code' => 'BRIVA'];
+        // $result = $Duitku->KalkulatorBiaya($total);
 
-        $curl = curl_init();
+        // foreach($result as $data){
 
-        curl_setopt_array($curl, array(
-        CURLOPT_FRESH_CONNECT  => true,
-        CURLOPT_URL            => 'https://tripay.co.id/api-sandbox/merchant/payment-channel',
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_HEADER         => false,
-        CURLOPT_HTTPHEADER     => ['Authorization: Bearer '.$apiKey],
-        CURLOPT_FAILONERROR    => false,
-        CURLOPT_IPRESOLVE      => CURL_IPRESOLVE_V4
-        ));
+        //     if($data->paymentMethod == "SP" || $data->paymentMethod == "DA"){
 
-        $response = curl_exec($curl);
-        $error = curl_error($curl);
+        //         $paymentData[] = [
+        //             "paymentMethod" => $data->paymentMethod,
+        //             "paymentName" => $data->paymentName,
+        //         ];
 
-        curl_close($curl);
+        //     }
 
-        // echo $response ? $response : $error;
+        // }
 
-        $mas = json_decode($response);
+        // $paymentData = json_encode($paymentData,true);
 
-        if($mas->success == true){
-            $mas = json_decode($response)->data;
-        } else {
-            $mas = json_decode($response);
-        }
+        // $paymentData = json_decode($paymentData);
 
-        // dd($mas);
-
-
-        // dd($harga);
-        // return view('home.cart');
-        return view('home.cart',compact('product','total','mas'));
+        return view('home.cart',compact('product','total'));
 
     }
 

@@ -19,7 +19,7 @@ class TransactionController extends Controller
     public function store(Request $request)
     {
 
-        // dd($request->all());
+        dd($request->all());
         // $product = Product::find($request->product_id);
 
         $users = Auth()->user()->id;
