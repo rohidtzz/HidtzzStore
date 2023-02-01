@@ -109,6 +109,8 @@ Route::group(['middleware' => ['role:user,staff,admin']], function () {
 
 });
 
+route::post('/callback/duitku', [IakCallbackController::class,'handle']);
+
 route::post('/callback/iak', [IakCallbackController::class,'handle']);
 
 

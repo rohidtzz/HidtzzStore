@@ -19,7 +19,7 @@ class TransactionController extends Controller
     public function store(Request $request)
     {
 
-        dd($request->all());
+        // dd($request->all());
         // $product = Product::find($request->product_id);
 
         $users = Auth()->user()->id;
@@ -106,7 +106,7 @@ class TransactionController extends Controller
         // dd($datas);
 
         foreach($datas as $dat){
-            $kjs[] = $dat;
+            $detailBarang[] = $dat;
         }
 
         // dd($kjs);
@@ -116,20 +116,26 @@ class TransactionController extends Controller
         //     'status' => 'pending'
         // ]);
 
+        // dd($request->totals);
 
+        $duitku = new DuitkuController;
+
+        $response = $duitku->requestTransaction($request->metode,$detailBarang);
+
+        dd($response);
 
         // $product = Order::where('user_id', $users)->get();
 
-        $method = $request->method;
+        // $method = $request->method;
         // dd($request->all());
 
-        $tripay = new TripayController;
+        // $tripay = new TripayController;
 
-        $tipa = $tripay->requestTransaction($method,$kjs);
+        // $tipa = $tripay->requestTransaction($method,$kjs);
 
         // dd($tipa->qr_url);
 
-        // dd($data);
+        // dd($kjs);
 
 
 

@@ -489,7 +489,7 @@ body{
 
                             let fee = $('#fee').html(result);
 
-                            jumlah = parseInt(y.totalFee)+parseInt(subtotal);
+                            jumlah = parseInt(subtotal)+parseInt(y.totalFee);
 
                             result2 = `
                             Rp. ${rupiah(jumlah)}
