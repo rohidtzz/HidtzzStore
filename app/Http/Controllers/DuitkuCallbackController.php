@@ -49,7 +49,7 @@ class DuitkuCallbackController extends Controller
             if($calcSignature)
             {
                 $Transaction = Transaction::where('reference', $reference)
-                ->where('status', '!=', 'SUCCESS')
+                ->where('status_message', '!=', 'SUCCESS')
                 ->first();
                 // dd($Transaction);
 
