@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('vaNumber')->nullable();
             $table->string('paymentUrl')->nullable();
             $table->string('fee')->nullable();
+            $table->string('sign')->nullable();
             $table->json('data');
             $table->string('expired')->nullable();
             $table->enum('status_message',['SUCCESS','UNPAID']);

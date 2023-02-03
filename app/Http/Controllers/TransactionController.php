@@ -169,6 +169,7 @@ class TransactionController extends Controller
                 // 'expired' => $response->expired_time,
                 'qr' => $response->qrString,
                 'fee' => $request->fee,
+                'sign' => $response->signature,
             ]);
 
             // $shipping = Shipping::create([
@@ -188,7 +189,8 @@ class TransactionController extends Controller
                 'status_message' => "UNPAID",
                 'user_id' => $users,
                 'paymentUrl' => $response->paymentUrl,
-                'fee' => $request->fee
+                'fee' => $request->fee,
+                'sign' => $response->signature
                 // 'qr' => $response->qrString,
             ]);
         }else{
@@ -201,7 +203,8 @@ class TransactionController extends Controller
                 'user_id' => $users,
                 'vaNumber' => $response->vaNumber,
                 'paymentUrl' => $response->paymentUrl,
-                'fee' => $request->fee
+                'fee' => $request->fee,
+                'sign' => $response->signature
                 // 'qr' => $response->qrString,
             ]);
             // $shipping = Shipping::create([

@@ -23,7 +23,8 @@ class Transaction extends Model
         'vaNumber',
         'customer_id',
         'product_code',
-        'fee'
+        'fee',
+        'sign'
     ];
 
     // protected $fillable =
