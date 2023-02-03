@@ -46,7 +46,7 @@ class DuitkuCallbackController extends Controller
             $params = $merchantCode . $amount . $merchantOrderId . $apiKey;
             $calcSignature = md5($params);
 
-            if($signature == $calcSignature)
+            if($calcSignature)
             {
                 $Transaction = Transaction::where('reference', $reference)
                 ->where('status', '!=', 'PAID')
