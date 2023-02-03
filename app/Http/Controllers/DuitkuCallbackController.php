@@ -12,19 +12,29 @@ class DuitkuCallbackController extends Controller
 {
     //
 
-    public function handle()
+    public function handle(Reqeust $request)
     {
         $apiKey = env('DUITKU_API_KEY'); // API key anda
-        $merchantCode = isset($_POST['merchantCode']) ? $_POST['merchantCode'] : null;
-        $amount = isset($_POST['amount']) ? $_POST['amount'] : null;
-        $merchantOrderId = isset($_POST['merchantOrderId']) ? $_POST['merchantOrderId'] : null;
-        $productDetail = isset($_POST['productDetail']) ? $_POST['productDetail'] : null;
-        $additionalParam = isset($_POST['additionalParam']) ? $_POST['additionalParam'] : null;
-        $paymentMethod = isset($_POST['paymentCode']) ? $_POST['paymentCode'] : null;
-        $resultCode = isset($_POST['resultCode']) ? $_POST['resultCode'] : null;
-        $merchantUserId = isset($_POST['merchantUserId']) ? $_POST['merchantUserId'] : null;
-        $reference = isset($_POST['reference']) ? $_POST['reference'] : null;
-        $signature = isset($_POST['signature']) ? $_POST['signature'] : null;
+        $merchantCode = isset($request->merchantCode) ? $request->merchantCode : null;
+        $amount = isset($request->amount) ? $request->amount : null;
+        $merchantOrderId = isset($request->merchantOrderId) ? $request->merchantOrderId : null;
+        $productDetail = isset($request->productDetail) ? $request->productDetail : null;
+        $additionalParam = isset($request->additionalParam) ? $request->additionalParam : null;
+        $paymentMethod = isset($request->paymentCode) ? $request->paymentCode : null;
+        $resultCode = isset($request->resultCode) ? $request->resultCode : null;
+        $merchantUserId = isset($request->merchantUserId) ? $request->merchantUserId : null;
+        $reference = isset($request->reference) ? $request->reference : null;
+        $signature = isset($request->signature) ? $request->signature : null;
+        // $merchantCode = isset($_POST['merchantCode']) ? $_POST['merchantCode'] : null;
+        // $amount = isset($_POST['amount']) ? $_POST['amount'] : null;
+        // $merchantOrderId = isset($_POST['merchantOrderId']) ? $_POST['merchantOrderId'] : null;
+        // $productDetail = isset($_POST['productDetail']) ? $_POST['productDetail'] : null;
+        // $additionalParam = isset($_POST['additionalParam']) ? $_POST['additionalParam'] : null;
+        // $paymentMethod = isset($_POST['paymentCode']) ? $_POST['paymentCode'] : null;
+        // $resultCode = isset($_POST['resultCode']) ? $_POST['resultCode'] : null;
+        // $merchantUserId = isset($_POST['merchantUserId']) ? $_POST['merchantUserId'] : null;
+        // $reference = isset($_POST['reference']) ? $_POST['reference'] : null;
+        // $signature = isset($_POST['signature']) ? $_POST['signature'] : null;
 
         //log callback untuk debug
         // file_put_contents('callback.txt', "* Callback *\r\n", FILE_APPEND | LOCK_EX);
