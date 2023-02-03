@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Response;
 use App\Models\Transaction;
+use Exception;
 
 class DuitkuCallbackController extends Controller
 {
@@ -35,7 +36,7 @@ class DuitkuCallbackController extends Controller
 
             if($signature == $calcSignature)
             {
-                $Transaction = Transaction::where('merchant_ref', $reference)
+                $Transaction = Transaction::where('reference', $reference)
                 ->where('status', '!=', 'PAID')
                 ->first();
                 // dd($Transaction);
