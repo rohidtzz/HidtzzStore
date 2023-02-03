@@ -23,7 +23,7 @@ class UserSeeder extends Seeder
             'email' => 'gemersrasta@gmail.com',
             'no_hp' => '123213',
             'role' => 'admin',
-            'nik' => '21121121212112'
+            // 'nik' => '21121121212112'
         ]);
 
         // User::create([

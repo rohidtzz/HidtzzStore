@@ -125,10 +125,10 @@
                                 <label for="floatingInput">Email</label>
                             </div>
 
-                            <div class="form-floating mb-3">
+                            {{-- <div class="form-floating mb-3">
                                 <input name="nik" type="number" class="form-control"  placeholder="name@example.com" required>
                                 <label for="floatingInput">Nik</label>
-                            </div>
+                            </div> --}}
 
                             <div class="form-floating mb-3">
                                 <input name="name" type="text" class="form-control"  placeholder="name@example.com" required>

@@ -10,6 +10,7 @@ class DuitkuController extends Controller
     public function RequestTransaction($metode,$detailBarang){
 
         $user = auth()->user();
+        // dd($detailBarang);
 
         $amount = 0;
         foreach($detailBarang as $k){
@@ -79,6 +80,8 @@ class DuitkuController extends Controller
         //     $item1, $item2
         // );
 
+        // dd($itemDetails);
+
         /*Khusus untuk metode pembayaran OL dan SL
         $accountLink = array (
             'credentialCode' => '7cXXXXX-XXXX-XXXX-9XXX-944XXXXXXX8',
@@ -139,9 +142,10 @@ class DuitkuController extends Controller
         if($httpCode == 200)
         {
             $result = json_decode($request, true);
-
-            dd($result);
-            //header('location: '. $result['paymentUrl']);
+            // dd($result);
+            return $result;
+            // dd($result);
+            // header('location: '. $result['paymentUrl']);
             // echo "paymentUrl :". $result['paymentUrl'] . "<br />";
             // echo "merchantCode :". $result['merchantCode'] . "<br />";
             // echo "reference :". $result['reference'] . "<br />";
@@ -154,6 +158,7 @@ class DuitkuController extends Controller
         {
             $request = json_decode($request);
             $error_message = "Server Error " . $httpCode ." ". $request->Message;
+            dd($error_message);
             echo $error_message;
         }
     }

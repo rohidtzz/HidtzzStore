@@ -57,7 +57,7 @@
                         </div>
                         <div class="card-footer">
                             <div class="row">
-                                <div class="col  text-start"><a href="{{ url('/cart/delete/'.$items->id) }}"> <i aria-hidden="true" style="color: red"  class="fa fa-trash-o" style="font-size:25px;margin-right:15px"></i></a></div>
+                                <div class="col  text-start"><a onclick="return confirm('Yakin hapus product?');" href="{{ url('/cart/delete/'.$items->id) }}"> <i aria-hidden="true" style="color: red"  class="fa fa-trash-o" style="font-size:25px;margin-right:15px"></i></a></div>
                                 <div class="col  text-end">
                                     <a href="{{ url('/cart/plus/'.$items->product_id) }}" style="text-decoration: none" class="fa fa-plus"></a>
                                     <input type="text" style="width:12px;border:none;color:black" value="{{ $items->qty }}" disabled>

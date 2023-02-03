@@ -12,6 +12,11 @@ use App\Models\Shipping;
 
 use Carbon\Carbon;
 
+use BaconQrCode\Renderer\ImageRenderer;
+use BaconQrCode\Renderer\Image\ImagickImageBackEnd;
+use BaconQrCode\Renderer\RendererStyle\RendererStyle;
+use BaconQrCode\Writer;
+
 class TransactionController extends Controller
 {
     //
@@ -93,15 +98,21 @@ class TransactionController extends Controller
 
         }
 
-        // $push = [
-        //     "name" => "jne",
-        //     "quantity" => 1,
-        //     "price" => $request->cost,
-        // ];
+        if($request->metode == "SP"){
+            $push = [
+                "name" => "fee",
+                "quantity" => 1,
+                "price" => $request->fee,
+            ];
+            $asd = array_push($datas,$push);
+        } else{
+
+        }
 
 
 
-        // $asd = array_push($datas,$push);
+
+
 
         // dd($datas);
 
@@ -122,7 +133,7 @@ class TransactionController extends Controller
 
         $response = $duitku->requestTransaction($request->metode,$detailBarang);
 
-        dd($response);
+        // dd($response);
 
         // $product = Order::where('user_id', $users)->get();
 
@@ -140,38 +151,58 @@ class TransactionController extends Controller
 
 
         Cart::where('user_id',$users)->delete();
+        $a = json_encode($response,true);
+        $response = json_decode($a);
 
-        if($tipa->payment_method == 'QRIS' || $tipa->payment_method == 'QRISC' || $tipa->payment_method == 'QRIS2'){
+        // dd($response);
+
+        if($request->metode == 'SP'){
 
 
             $trans = Transaction::create([
-                'amount' => $tipa->amount,
-                'reference' => $tipa->reference,
-                'merchant_ref' => $tipa->merchant_ref,
+                'amount' => $response->amount,
+                'reference' => $response->reference,
+                'merchant_code' => $response->merchantCode,
                 'data' => json_encode($d),
-                'status' => $tipa->status,
+                'status_message' => "UNPAID",
                 'user_id' => $users,
-                'expired' => $tipa->expired_time,
-                'qr' => $tipa->qr_url,
+                // 'expired' => $response->expired_time,
+                'qr' => $response->qrString,
+                'fee' => $request->fee,
             ]);
 
             // $shipping = Shipping::create([
             //     'data' => json_encode($push),
-            //     'status' => "proses",
+            //     'status_message' => "proses",
             //     // 'cost' => $request->cost,
             //     'cost' => $request->cost,
             //     'user_id' => $users,
             //     'transaction_id'=> $trans->id
             // ]);
-        } else{
+        }else if($request->metode == "DA"){
             $trans = Transaction::create([
-                'amount' => $tipa->amount,
-                'reference' => $tipa->reference,
-                'merchant_ref' => $tipa->merchant_ref,
+                'amount' => $response->amount,
+                'reference' => $response->reference,
+                'merchant_code' => $response->merchantCode,
                 'data' => json_encode($d),
-                'status' => $tipa->status,
-                'expired' => $tipa->expired_time,
-                'user_id' => $users
+                'status_message' => "UNPAID",
+                'user_id' => $users,
+                'paymentUrl' => $response->paymentUrl,
+                'fee' => $request->fee
+                // 'qr' => $response->qrString,
+            ]);
+        }else{
+            $trans = Transaction::create([
+                'amount' => $response->amount,
+                'reference' => $response->reference,
+                'merchant_code' => $response->merchantCode,
+                'data' => json_encode($d),
+                'status_message' => "UNPAID",
+                'user_id' => $users,
+                'vaNumber' => $response->vaNumber,
+                'paymentUrl' => $response->paymentUrl,
+                'fee' => $request->fee
+                // 'qr' => $response->qrString,
             ]);
             // $shipping = Shipping::create([
             //     'data' => json_encode($push),
@@ -182,6 +213,48 @@ class TransactionController extends Controller
             //     'transaction_id'=> $trans->id
             // ]);
         }
+
+        // if($tipa->payment_method == 'QRIS' || $tipa->payment_method == 'QRISC' || $tipa->payment_method == 'QRIS2'){
+
+
+        //     $trans = Transaction::create([
+        //         'amount' => $tipa->amount,
+        //         'reference' => $tipa->reference,
+        //         'merchant_ref' => $tipa->merchant_ref,
+        //         'data' => json_encode($d),
+        //         'status' => $tipa->status,
+        //         'user_id' => $users,
+        //         'expired' => $tipa->expired_time,
+        //         'qr' => $tipa->qr_url,
+        //     ]);
+
+        //     // $shipping = Shipping::create([
+        //     //     'data' => json_encode($push),
+        //     //     'status' => "proses",
+        //     //     // 'cost' => $request->cost,
+        //     //     'cost' => $request->cost,
+        //     //     'user_id' => $users,
+        //     //     'transaction_id'=> $trans->id
+        //     // ]);
+        // } else{
+        //     $trans = Transaction::create([
+        //         'amount' => $tipa->amount,
+        //         'reference' => $tipa->reference,
+        //         'merchant_ref' => $tipa->merchant_ref,
+        //         'data' => json_encode($d),
+        //         'status' => $tipa->status,
+        //         'expired' => $tipa->expired_time,
+        //         'user_id' => $users
+        //     ]);
+        //     // $shipping = Shipping::create([
+        //     //     'data' => json_encode($push),
+        //     //     'status' => "proses",
+        //     //     // 'cost' => $request->cost,
+        //     //     'cost' => $request->cost,
+        //     //     'user_id' => $users,
+        //     //     'transaction_id'=> $trans->id
+        //     // ]);
+        // }
 
 
 
@@ -194,53 +267,69 @@ class TransactionController extends Controller
             'stock' => $stoc->stock-1
         ]);
 
-        return redirect('transaction/'.$tipa->reference)->withSuccess('Transaction berhasil di buat');
+        return redirect('transaction/'.$response->reference)->withSuccess('Transaction berhasil di buat');
 
     }
 
     public function detail($references)
     {
 
-        $tripay = new TripayController;
+        $datas = Transaction::where('reference',$references)->get();
 
-        $data = $tripay->detailTransaction($references);
+        $status = $datas[0]->status_message;
+        $total = $datas[0]->amount;
+        $qr = $datas[0]->qr;
+        $data = json_decode($datas[0]->data);
 
-        // dd($data);
-        $data_kita = Transaction::where('reference',$references)->get('qr');
+        $vaNumber = $datas[0]->vaNumber;
 
-        if(json_decode($data)->success == false){
-            return redirect()->back()->with('errors','reference not found');
-        }
-            $data = json_decode($data)->data;
-
-            if(!$data_kita){
-                return redirect()->back()->with('errors','reference not found');
-            }
-
-
-        $total_fee = $data->total_fee;
-        $total = $data->amount;
-        $payment_method = $data->payment_method;
-
-        $qr = Transaction::where('reference',$references)->get('qr')[0]->qr;
-
-        $status = Transaction::where('reference',$references)->first()->status;
-        $datas = Transaction::where('reference',$references)->get()[0];
-        $exp = $datas->expired;
-        $datas = json_decode($datas->data);
-
-        $transs = Transaction::where('reference',$references)->first();
-        $pengiriman = Shipping::where('transaction_id',$transs->id)->first();
-
-        // dd($pengiriman);
-
-        // dd(Carbon::parse(gmdate("Y-m-d H:i",$exp))->translatedFormat('l, d F Y H:i'));
-
-        if($qr == null){
+        if($datas[0]->qr == null){
             $qr = false;
-            return view('transaction.detail',compact('data','total_fee','total','payment_method','qr','status','datas','exp','pengiriman'));
+            return view('home.transaction.detail',compact('datas','data','status','total','qr','vaNumber'));
         }
-        return view('home.transaction.detail',compact('data','total_fee','total','payment_method','qr','status','datas','exp','pengiriman'));
+
+        // dd($status);
+
+        return view('home.transaction.detail',compact('datas','data','status','total','qr','vaNumber'));
+
+        // $tripay = new TripayController;
+
+        // $data = $tripay->detailTransaction($references);
+
+        // // dd($data);
+        // $data_kita = Transaction::where('reference',$references)->get('qr');
+
+        // if(json_decode($data)->success == false){
+        //     return redirect()->back()->with('errors','reference not found');
+        // }
+        //     $data = json_decode($data)->data;
+
+        //     if(!$data_kita){
+        //         return redirect()->back()->with('errors','reference not found');
+        //     }
+
+
+        // $total_fee = $data->total_fee;
+        // $total = $data->amount;
+        // $payment_method = $data->payment_method;
+
+        // $qr = Transaction::where('reference',$references)->get('qr')[0]->qr;
+
+        // $status = Transaction::where('reference',$references)->first()->status;
+        // $datas = Transaction::where('reference',$references)->get()[0];
+        // $exp = $datas->expired;
+        // $datas = json_decode($datas->data);
+
+        // $transs = Transaction::where('reference',$references)->first();
+        // $pengiriman = Shipping::where('transaction_id',$transs->id)->first();
+
+
+
+        // if($qr == null){
+        //     $qr = false;
+        //     return view('transaction.detail',compact('data','total_fee','total','payment_method','qr','status','datas','exp','pengiriman'));
+        // }
+        // return view('home.transaction.detail',compact('data','total_fee','total','payment_method','qr','status','datas','exp','pengiriman'));
 
     }
 

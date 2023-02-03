@@ -17,17 +17,35 @@ return new class extends Migration
             $table->id();
             $table->string('amount');
             $table->string('reference');
-            $table->string('merchant_ref')->nullable();
+            $table->string('merchant_code')->nullable();
             $table->string('qr')->nullable();
+            $table->string('vaNumber')->nullable();
+            $table->string('paymentUrl')->nullable();
+            $table->string('fee')->nullable();
             $table->json('data');
-            $table->string('expired');
-            $table->enum('status',['PAID','UNPAID']);
+            $table->string('expired')->nullable();
+            $table->enum('status_message',['SUCCESS','UNPAID']);
             $table->unsignedBigInteger('user_id');
             $table->string('customer_id')->nullable();
             $table->string('product_code')->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
+        // Schema::create('transactions', function (Blueprint $table) {
+        //     $table->id();
+        //     $table->string('amount');
+        //     $table->string('reference');
+        //     $table->string('merchant_ref')->nullable();
+        //     $table->string('qr')->nullable();
+        //     $table->json('data');
+        //     $table->string('expired');
+        //     $table->enum('status',['PAID','UNPAID']);
+        //     $table->unsignedBigInteger('user_id');
+        //     $table->string('customer_id')->nullable();
+        //     $table->string('product_code')->nullable();
+        //     $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+        //     $table->timestamps();
+        // });
     }
 
     /**

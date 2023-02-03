@@ -18,10 +18,18 @@ class ProductSeeder extends Seeder
     {
 
         Product::create([
-            'name' => 'tiket',
-            'description' => 'Tiket Semi Final',
+            'name' => 'baju rajut',
+            'description' => 'ini itu Description product',
             'price' => 125000,
             'image' => '1.jpg',
+            'stock' => 350,
+        ]);
+
+        Product::create([
+            'name' => 'baju ultras',
+            'description' => 'ini itu Description product',
+            'price' => 120000,
+            'image' => '2.jpg',
             'stock' => 350,
         ]);
 

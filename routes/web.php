@@ -11,6 +11,7 @@ use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\TripayCallbackController;
 use App\Http\Controllers\IakCallbackController;
+use App\Http\Controllers\DuitkuCallbackController;
 
 use App\Http\Controllers\DuitkuController;
 
@@ -109,7 +110,7 @@ Route::group(['middleware' => ['role:user,staff,admin']], function () {
 
 });
 
-route::post('/callback/duitku', [IakCallbackController::class,'handle']);
+route::post('/callback/duitku', [DuitkuCallbackController::class,'handle']);
 
 route::post('/callback/iak', [IakCallbackController::class,'handle']);
 

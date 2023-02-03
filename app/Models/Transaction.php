@@ -13,15 +13,32 @@ class Transaction extends Model
     [
         'amount',
         'reference',
-        'merchant_ref',
-        'status',
+        'merchant_code',
+        'status_message',
         'data',
+        'paymentUrl',
         'user_id',
         'expired',
         'qr',
+        'vaNumber',
         'customer_id',
-        'product_code'
+        'product_code',
+        'fee'
     ];
+
+    // protected $fillable =
+    // [
+    //     'amount',
+    //     'reference',
+    //     'merchant_ref',
+    //     'status',
+    //     'data',
+    //     'user_id',
+    //     'expired',
+    //     'qr',
+    //     'customer_id',
+    //     'product_code'
+    // ];
 
     public function user(){
         return $this->belongsTo(User::class);

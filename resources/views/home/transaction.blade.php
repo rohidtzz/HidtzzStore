@@ -13,9 +13,18 @@
                         <div class="card-header">
                             <div class="row">
                                 <div class="col text-start">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.2em" fill="currentColor" class="bi bi-bag" viewBox="0 0 16 16">
-                                    <path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5z"/>
-                                    </svg> {{ substr($datas->created_at,0,11) }}
+                                    @if ($datas->product_id == null)
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.2em" width="16" height="16" fill="currentColor" class="bi bi-phone" viewBox="0 0 16 16">
+                                            <path d="M11 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h6zM5 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H5z"/>
+                                            <path d="M8 14a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
+                                        </svg>
+
+                                    @else
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.2em" fill="currentColor" class="bi bi-bag" viewBox="0 0 16 16">
+                                            <path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5z"/>
+                                        </svg>
+                                    @endif
+                                     {{ substr($datas->created_at,0,11) }}
                                 </div>
 
                                 <div class="col text-end">
@@ -52,7 +61,7 @@
                                         @endfor
                                     @endforeach --}}
                                         {{-- {{ json_decode($datas->data)}} --}}
-                                    <img  width="100px" src="{{asset('product/img/'.json_decode($datas->data)[0]->image) }}" alt="">
+                                    <img  width="100px" height="110px" src="{{asset('product/img/'.json_decode($datas->data)[0]->image) }}" alt="">
                                     {{-- @foreach (json_decode($pro->data) as $s)
 
                                     <img src="{{ asset('product/img/'.$s->image) }}" width="100px" alt="">

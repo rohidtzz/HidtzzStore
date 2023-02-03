@@ -405,7 +405,7 @@ body{
                         <div class="d-flex justify-content-end" >
                             <input type="hidden" name="totals" >
 
-
+                            <input type="hidden" name="fee">
                                     <button id="but" hidden onclick="return confirm('yakin checkout?');" class="btn btn-primary btn-lg btn-block" >Check out</button>
                             </form>
 
@@ -460,6 +460,7 @@ body{
 
         let subtotal = $('input[name=subtotal]').val();
         const code = $('#metode').val();
+        $("#but").attr("hidden",true);
 
         if(code != 0){
 
@@ -483,24 +484,60 @@ body{
 
                         if(y.paymentMethod == code){
 
-                            result = `
-                            Rp. ${rupiah(y.totalFee)}
-                            `;
+                            if(y.paymentMethod == "SP"){
 
-                            let fee = $('#fee').html(result);
 
-                            jumlah = parseInt(subtotal)+parseInt(y.totalFee);
 
-                            result2 = `
-                            Rp. ${rupiah(jumlah)}
-                            `;
 
-                            let total = $('#totall').html(result2);
+                                let hitungFee = parseInt(subtotal) * 0.007;
+                                let totalFee = parseInt(subtotal)+parseInt(hitungFee);
 
-                            let totals = $('input[name=totals]').val(jumlah);
-                            // console.log(totals);
-                            // console.log(total);
-                            // let total = $('#total').html()
+                                // jumlah = parseInt(subtotal)+parseInt(0.7);
+                                jumlah = totalFee;
+
+                                // console.log(jumlah);
+                                // console.log(hitungFee);
+                                // console.log(totalFee);
+
+                                result2 = `
+                                Rp. ${rupiah(jumlah)}
+                                `;
+
+                                resultFee = `
+                                Rp. ${rupiah(hitungFee)}
+                                `;
+
+                                let total = $('#totall').html(result2);
+                                let fee = $('#fee').html(resultFee);
+
+                                let inputFee = $('input[name=fee]').val(hitungFee);
+
+                                let totals = $('input[name=totals]').val(jumlah);
+
+                            } else {
+
+                                result = `
+                                Rp. ${rupiah(y.totalFee)}
+                                `;
+
+                                let fee = $('#fee').html(result);
+
+                                jumlah = parseInt(subtotal)+parseInt(y.totalFee);
+
+                                result2 = `
+                                Rp. ${rupiah(jumlah)}
+                                `;
+
+                                let total = $('#totall').html(result2);
+                                let inputFee = $('input[name=fee]').val(y.totalFee);
+
+                                let totals = $('input[name=totals]').val(jumlah);
+                                // console.log(totals);
+                                // console.log(total);
+                                // let total = $('#total').html()
+                            }
+                            $("#but").removeAttr("hidden");
+
                         } else {
 
                         }
@@ -516,7 +553,7 @@ body{
 
                 },
             });
-            $("#but").removeAttr("hidden");
+            // $("#but").removeAttr("hidden");
         } else{
             $('#fee').empty();
             $('#totall').empty();

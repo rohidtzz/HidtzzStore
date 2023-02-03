@@ -169,7 +169,7 @@ body{
                                     <span class="value badge bg-primary">status: {{ $status }}</span>
                                     @elseif ($status == "UNPAID")
                                     <span class="value badge bg-danger">{{ $status }}</span>
-                                    <p id="time">expired : {{ Carbon\Carbon::parse(gmdate("Y-m-d H:i",$exp))->translatedFormat('l, d F Y H:i') }}</p>
+                                    {{-- <p id="time">expired : {{ Carbon\Carbon::parse(gmdate("Y-m-d H:i",$exp))->translatedFormat('l, d F Y H:i') }}</p> --}}
                                     @elseif ($status == "REFUND")
                                     <p>status: <span class="value badge bg-info">{{ $status }}</span></p>
                                     @elseif ($status == "EXPIRED")
@@ -183,8 +183,8 @@ body{
 
 
                                 {{-- @foreach ($data as $ref) --}}
-
-                                    @foreach ($datas as $items)
+                                    {{-- {{dd($datas[])}} --}}
+                                    @foreach ($data as $items)
 
 
                                     {{-- {{dd($items)}} --}}
@@ -288,31 +288,31 @@ body{
 
 			 					{{-- <a type="button" href="{{ url('/checkout') }}" class="btn btn-primary btn-lg btn-block">Checkout</a> --}}
                                 @if ($status == "PAID")
+
+                                @else
+                                    {{-- <h4 style="margin-top:20px">Instruksi pembayaran</h4> --}}
+                                    {{-- @foreach ($data->instructions as $ins)
+
+
+                                        <div class="dropdown">
+                                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                            {{ $ins->title }}
+                                        </button>
+                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                            @foreach ($ins->steps as $in)
+                                            <li class="dropdown-item disabled" style="color: black" >{{ $loop->iteration }}.{!! $in !!}</li>
+                                            @endforeach
+
+                                        </ul>
+                                        </div>
+                                    @endforeach --}}
+
+                                    @if($qr)
+                                            <p class="text-center" style="margin-top: 10px">{!! QrCode::size(200)->generate($qr) !!} </p>
+
                                     @else
-                                    <h4 style="margin-top:20px">Instruksi pembayaran</h4>
-                                    @foreach ($data->instructions as $ins)
-
-
-                                    <div class="dropdown">
-                                       <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                         {{ $ins->title }}
-                                       </button>
-                                       <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                           @foreach ($ins->steps as $in)
-                                         <li class="dropdown-item disabled" style="color: black" >{{ $loop->iteration }}.{!! $in !!}</li>
-                                         @endforeach
-
-                                       </ul>
-                                     </div>
-                                     @endforeach
-
-                                     @if($qr)
-                                     @if($data->status == "UNPAID")
-                                     <p class="text-center" style="margin-top: 10px"><img src="{{ $qr }}" alt=""> </p>
-                                     @else
-                                     @endif
-                                     @else
-                                     @endif
+                                    <p class="text-center" style="margin-top: 10px">{{ $vaNumber }}</p>
+                                    @endif
                                 @endif
 
                                 <br>
