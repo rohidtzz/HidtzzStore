@@ -25,7 +25,8 @@ class DuitkuCallbackController extends Controller
         $resultCode = isset($request->resultCode) ? $request->resultCode : null;
         $merchantUserId = isset($request->merchantUserId) ? $request->merchantUserId : null;
         $reference = isset($request->reference) ? $request->reference : null;
-        $signature = isset($request->signature) ? $request->signature : null;
+        // $signature = isset($request->signature) ? $request->signature : null;
+
         // $merchantCode = isset($_POST['merchantCode']) ? $_POST['merchantCode'] : null;
         // $amount = isset($_POST['amount']) ? $_POST['amount'] : null;
         // $merchantOrderId = isset($_POST['merchantOrderId']) ? $_POST['merchantOrderId'] : null;
@@ -40,7 +41,7 @@ class DuitkuCallbackController extends Controller
         //log callback untuk debug
         // file_put_contents('callback.txt', "* Callback *\r\n", FILE_APPEND | LOCK_EX);
 
-        if(!empty($merchantCode) && !empty($amount) && !empty($merchantOrderId) && !empty($signature))
+        if(!empty($merchantCode) && !empty($amount) && !empty($merchantOrderId))
         {
             $params = $merchantCode . $amount . $merchantOrderId . $apiKey;
             $calcSignature = md5($params);
