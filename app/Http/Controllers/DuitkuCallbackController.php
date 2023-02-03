@@ -14,7 +14,7 @@ class DuitkuCallbackController extends Controller
 
     public function handle(Request $request)
     {
-        dd($request->all());
+        // dd($request->all());
         $apiKey = env('DUITKU_API_KEY'); // API key anda
         $merchantCode = isset($request->merchantCode) ? $request->merchantCode : null;
         $amount = isset($request->amount) ? $request->amount : null;
