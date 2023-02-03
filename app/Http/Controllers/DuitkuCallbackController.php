@@ -60,7 +60,7 @@ class DuitkuCallbackController extends Controller
                     ]);
                 }
 
-                $Transaction->update(['status' => "SUCCESS"]);
+                $Transaction->update(['status_message' => "SUCCESS"]);
                 return Response::json([
                     'success' => true
                 ]);
