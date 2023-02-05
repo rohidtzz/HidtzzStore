@@ -284,6 +284,10 @@ class TransactionController extends Controller
         $qr = $datas[0]->qr;
         $data = json_decode($datas[0]->data);
 
+        // dd($total);
+
+        // dd($datas);
+
         $vaNumber = $datas[0]->vaNumber;
 
         if($datas[0]->qr == null){

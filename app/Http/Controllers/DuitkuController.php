@@ -158,7 +158,7 @@ class DuitkuController extends Controller
         {
             $request = json_decode($request);
             $error_message = "Server Error " . $httpCode ." ". $request->Message;
-            dd($error_message);
+            dd($request);
             echo $error_message;
         }
     }
