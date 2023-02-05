@@ -114,6 +114,6 @@ route::post('/callback/duitku', [DuitkuCallbackController::class,'handle']);
 
 route::post('/callback/iak', [IakCallbackController::class,'handle']);
 
-
-route::post('/callback', [TripayCallbackController::class,'handle']);
+route::post('/callback', [DuitkuCallbackController::class,'handle']);
+// route::post('/callback', [TripayCallbackController::class,'handle']);
 

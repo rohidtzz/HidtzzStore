@@ -32,8 +32,8 @@ class DuitkuController extends Controller
         // $additionalParam = ''; // opsional
         // $merchantUserInfo = ''; // opsional
         $customerVaName = $user->name; // tampilan nama pada tampilan konfirmasi bank
-        $callbackUrl = 'http://store.hidtzz.my.id/callback/duitku'; // url untuk callback
-        $returnUrl = 'http://store.hidtzz.my.id/transaction/'.$merchantOrderId; // url untuk redirect
+        $callbackUrl = 'https://store.hidtzz.my.id/callback/duitku'; // url untuk callback
+        $returnUrl = 'https://store.hidtzz.my.id/transaction/'.$merchantOrderId; // url untuk redirect
         $expiryPeriod = 10; // atur waktu kadaluarsa dalam hitungan menit
         $signature = md5($merchantCode . $merchantOrderId . $paymentAmount . $apiKey);
 

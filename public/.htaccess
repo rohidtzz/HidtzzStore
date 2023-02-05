@@ -1,8 +1,11 @@
 <IfModule mod_rewrite.c>
     <IfModule mod_negotiation.c>
         Options -MultiViews -Indexes
-        Header set Connection keep-alive
     </IfModule>
+
+    # <ifModule mod_headers.c>
+    #     Header set Connection keep-alive
+    # </ifModule>
 
     RewriteEngine On
 
@@ -20,3 +23,8 @@
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
 </IfModule>
+
+# <ifModule mod_headers.c>
+#     Header set Connection keep-alive
+# </ifModule>
+
