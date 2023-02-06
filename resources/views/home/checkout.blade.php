@@ -439,7 +439,12 @@ body{
 
                     // console.log(y.category_id)
                     // result = '<option value="'+ y.paymentMethod +'"> <img src="'+ y.paymentImage +'"></option>';
-                    result = '<option value="'+ y.paymentMethod +'">'+ y.paymentName +'</option>';
+                    if(y.paymentName == "SHOPEEPAY QRIS"){
+                        result = '<option value="'+ y.paymentMethod +'">'+ y.paymentName.substr(10) +'</option>';
+
+                    } else {
+                        result = '<option value="'+ y.paymentMethod +'">'+ y.paymentName +'</option>';
+                    }
                     $('#metode').append(result);
                 });
 
