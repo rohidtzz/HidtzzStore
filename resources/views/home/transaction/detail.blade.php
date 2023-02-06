@@ -165,15 +165,15 @@ body{
 	 				<div class="row">
 	 					<div class="col-md-12 col-lg-8">
 	 						<div class="items">
-                                <h6 style="margin:2%">Status : @if ($status == "PAID")
-                                    <span class="value badge bg-primary">status: {{ $status }}</span>
+                                <h6 style="margin:2%">Status : @if ($status == "SUCCESS")
+                                    <span class="value badge bg-primary">PAID</span>
                                     @elseif ($status == "UNPAID")
                                     <span class="value badge bg-danger">{{ $status }}</span>
                                     {{-- <p id="time">expired : {{ Carbon\Carbon::parse(gmdate("Y-m-d H:i",$exp))->translatedFormat('l, d F Y H:i') }}</p> --}}
                                     @elseif ($status == "REFUND")
-                                    <p>status: <span class="value badge bg-info">{{ $status }}</span></p>
+                                    <p>status: <span class="value badge bg-info">{{ REFUND }}</span></p>
                                     @elseif ($status == "EXPIRED")
-                                    <span class="value badge bg-danger">{{ $status }}</span>
+                                    <span class="value badge bg-danger">{{ EXPIRED }}</span>
                                     @elseif ($status == "FAILED")
                                     <span class="value badge bg-danger">{{ $status }}</span>
                                     @else
@@ -283,6 +283,8 @@ body{
                                 @if ($status == "PAID")
                                 <div class="summary-item"><span class="text">Jumlah yang sudah dibayar</span><span style="font-weight: bold;font-size:18px" class="price">Rp. {{ number_format($total) }}</span></div>
                                 @else
+                                <div class="summary-item"><span class="text">Subtotal Product</span><span style="font-weight: bold;font-size:18px" class="price">Rp. {{ number_format($subtotal) }}</span></div>
+                                <div class="summary-item"><span class="text">Fee</span><span style="font-weight: bold;font-size:18px" class="price">Rp. {{ number_format($fee) }}</span></div>
                                 <div class="summary-item"><span class="text">Jumlah yang harus dibayar</span><span style="font-weight: bold;font-size:18px" class="price">Rp. {{ number_format($total) }}</span></div>
                                 @endif
 
@@ -308,10 +310,13 @@ body{
                                     @endforeach --}}
 
                                     @if($qr)
-                                            <p class="text-center" style="margin-top: 10px">{!! QrCode::size(200)->generate($qr) !!} </p>
-
+                                        <br>
+                                        <div class="summary-item"><span class="text">Silahkan Scan QR Dibawah ini</span>
+                                        <br><br>
+                                        <p class="text-center" style="margin-top: 10px">{!! QrCode::size(200)->generate($qr) !!} </p>
                                     @else
-                                    <p class="text-center" style="margin-top: 10px">{{ $vaNumber }}</p>
+                                        <br>
+                                        <div class="summary-item"><span class="text">VaNumber: {{ $vaNumber }}</span>
                                     @endif
                                 @endif
 

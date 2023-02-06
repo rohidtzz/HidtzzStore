@@ -211,13 +211,13 @@ class LayananDigitalController extends Controller
 
         $data = $hijau->pricelist()->pricelist;
 
-        $tripay = new TripayController;
+        $tripay = new DuitkuController;
 
         foreach($data as $d){
 
             if($d->product_type == 'pulsa' && $d->product_description == $operator ){
 
-                $harga  = $tripay->kalkulator($d->product_price+500,"QRIS");
+                $harga  = $tripay->KalkulatorBiaya($d->product_price+750);
                 // $array = [
                 //     'total' => $dat[0]['product_price']+$harga[0]->total_fee->customer
                 // ];
@@ -229,7 +229,7 @@ class LayananDigitalController extends Controller
                     "product_description" => $d->product_description,
                     "product_nominal" => $d->product_nominal,
                     "product_details" => $d->product_details,
-                    "product_price" => $d->product_price+500+$harga[0]->total_fee->customer,
+                    "product_price" => $d->product_price+750+$harga[4]->totalFee,
                     "product_type" => $d->product_type,
                     "active_period" => $d->active_period,
                     "status" => $d->status,
@@ -268,7 +268,7 @@ class LayananDigitalController extends Controller
 
         $data = $hijau->pricelist()->pricelist;
 
-        $tripay = new TripayController;
+        $tripay = new DuitkuController;
 
 
 
@@ -276,19 +276,19 @@ class LayananDigitalController extends Controller
 
             if($d->product_code == $code ){
 
-                $harga  = $tripay->kalkulator($d->product_price+500,"QRIS");
+                $harga  = $tripay->KalkulatorBiaya($d->product_price+750);
 
                 $dat[] = [
                     "product_code" => $d->product_code,
                     "product_description" => $d->product_description,
                     "product_nominal" => $d->product_nominal,
                     "product_details" => $d->product_details,
-                    "product_price" => $d->product_price+500+$harga[0]->total_fee->customer,
+                    "product_price" => $d->product_price+750+$harga[4]->totalFee,
                     "product_type" => $d->product_type,
                     "active_period" => $d->active_period,
                     "status" => $d->status,
                     "icon_url" => $d->icon_url,
-                    "price" => $d->product_price+500
+                    "price" => $d->product_price+750
                 ];
 
             }

@@ -260,16 +260,6 @@ class TransactionController extends Controller
         // }
 
 
-
-        // Order::where('user_id',$users)->delete();
-
-        $stoc = Product::find(1);
-        // dd($stock);
-
-        Product::find(1)->update([
-            'stock' => $stoc->stock-1
-        ]);
-
         return redirect('transaction/'.$response->reference)->withSuccess('Transaction berhasil di buat');
 
     }
@@ -282,22 +272,24 @@ class TransactionController extends Controller
         $status = $datas[0]->status_message;
         $total = $datas[0]->amount;
         $qr = $datas[0]->qr;
+        $fee = $datas[0]->fee;
         $data = json_decode($datas[0]->data);
 
-        // dd($total);
-
-        // dd($datas);
+        $subtotal = 0;
+        foreach($data as $k){
+            $subtotal += $k->subtotal;
+        }
 
         $vaNumber = $datas[0]->vaNumber;
 
         if($datas[0]->qr == null){
             $qr = false;
-            return view('home.transaction.detail',compact('datas','data','status','total','qr','vaNumber'));
+            return view('home.transaction.detail',compact('datas','data','status','total','qr','vaNumber','fee','subtotal'));
         }
 
         // dd($status);
 
-        return view('home.transaction.detail',compact('datas','data','status','total','qr','vaNumber'));
+        return view('home.transaction.detail',compact('datas','data','status','total','qr','vaNumber','fee','subtotal'));
 
         // $tripay = new TripayController;
 
@@ -358,7 +350,7 @@ class TransactionController extends Controller
 
         // $users = Auth()->user()->id;
 
-        $data = Transaction::paginate(10);
+        $data = Transaction::all();
         // dd($data);
 
 
@@ -372,33 +364,53 @@ class TransactionController extends Controller
 
         // dd($request->all());
 
-        $tripay = new TripayController;
-
-        $tripaypulsa = $tripay->requestTransactionPulsa($request->all());
-
-        $d[] = [
+        $detailBarang[] = [
             'qty' => 1,
-            'subtotal' => $tripaypulsa->amount,
+            'subtotal' => $request->harga,
             'product_id' => null,
             'image' => 'gambarPulsa.jpg'
         ];
+        // dd($detailBarang);
+        $duitku = new DuitkuController;
 
-        $user = auth()->user();
+        $response = $duitku->requestTransactionPulsa($request->harga,"SP",$detailBarang);
+
+
+        $a = json_encode($response,true);
+        $response = json_decode($a);
+
+
+        $users = Auth()->user()->id;
+
 
         $trans = Transaction::create([
-            'amount' => $tripaypulsa->amount,
-            'reference' => $tripaypulsa->reference,
-            'merchant_ref' => $tripaypulsa->merchant_ref,
-            'data' => json_encode($d),
-            'status' => $tripaypulsa->status,
-            'user_id' => $user->id,
-            'expired' => $tripaypulsa->expired_time,
-            'qr' => $tripaypulsa->qr_url,
-            'customer_id' => $request->nohp,
-            'product_code' => $request->code
+            'amount' => $response->amount,
+            'reference' => $response->reference,
+            'merchant_code' => $response->merchantCode,
+            'data' => json_encode($detailBarang),
+            'status_message' => "UNPAID",
+            'user_id' => $users,
+            // 'expired' => $response->expired_time,
+            'qr' => $response->qrString,
+            // 'vaNumber' => $response->vaNumber,
+            // 'fee' => $request->fee,
+            // 'sign' => $response->signature,
         ]);
 
-        return redirect('transaction/'.$tripaypulsa->reference)->withSuccess('Transaksi berhasil di buat');
+        // $trans = Transaction::create([
+        //     'amount' => $tripaypulsa->amount,
+        //     'reference' => $tripaypulsa->reference,
+        //     'merchant_ref' => $tripaypulsa->merchant_ref,
+        //     'data' => json_encode($d),
+        //     'status' => $tripaypulsa->status,
+        //     'user_id' => $user->id,
+        //     'expired' => $tripaypulsa->expired_time,
+        //     'qr' => $tripaypulsa->qr_url,
+        //     'customer_id' => $request->nohp,
+        //     'product_code' => $request->code
+        // ]);
+
+        return redirect('transaction/'.$response->reference)->withSuccess('Transaksi berhasil di buat');
 
 
 

@@ -182,7 +182,7 @@
                                                 <div  class=  "card-body"  >
                                                     <div class="row">
                                                         <div class="col-6 text-start" style="padding:7px">
-                                                            <input data-id="${y.product_price}" required name="code" value="${y.product_code}" type="radio"> ${y.product_description} ${y.product_nominal}
+                                                            <input required name="code" value="${y.product_code}" type="radio"> ${y.product_description} ${y.product_nominal}
                                                         </div>
                                                         <div class="col-6 text-end" style="padding:7px">
                                                            Rp ${rupiah(y.product_price)}
@@ -388,7 +388,7 @@
                 success : function(data){
 
                     $('.hide').empty();
-
+                    // console.log(data);
                     $(data).each(function(x,y){
                         // console.log(y.category_id)
                         const rupiah = (number)=>{
