@@ -289,7 +289,7 @@ body{
                                 @endif
 
 			 					{{-- <a type="button" href="{{ url('/checkout') }}" class="btn btn-primary btn-lg btn-block">Checkout</a> --}}
-                                @if ($status == "PAID")
+                                @if ($status == "SUCCESS")
 
                                 @else
                                     {{-- <h4 style="margin-top:20px">Instruksi pembayaran</h4> --}}
