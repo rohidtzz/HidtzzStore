@@ -259,7 +259,7 @@ body{
                                                         </div>
                                                         <div class="col-md-3 price">
                                                             {{-- <label for="quantity">Price: </label><br> --}}
-                                                            <span class="fst-italic" style="padding-bottom: 50px">&nbsp; Rp.{{ number_format($items->subtotal) }}</span>
+                                                            <span class="fst-italic" style="padding-bottom: 50px">Rp.{{ number_format($items->subtotal) }}</span>
                                                         </div>
                                                     </div>
                                                 </div>

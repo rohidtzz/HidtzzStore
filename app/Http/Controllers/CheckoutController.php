@@ -47,8 +47,8 @@ class CheckoutController extends Controller
 
 
 
-
-        return view('home.checkout',compact('product','total'));
+        $cart = Cart::where('user_id',$users)->count();
+        return view('home.checkout',compact('product','total','cart'));
 
     }
 

@@ -55,8 +55,8 @@ class CartController extends Controller
         // $paymentData = json_encode($paymentData,true);
 
         // $paymentData = json_decode($paymentData);
-
-        return view('home.cart',compact('product','total'));
+        $cart = Cart::where('user_id',$users)->count();
+        return view('home.cart',compact('product','total','cart'));
 
     }
 
@@ -71,6 +71,16 @@ class CartController extends Controller
 
     public function create($id)
     {
+
+        if($id == null){
+            return redirect()->back()->with('errors', 'Failed');
+        }
+        $cekProduct = Product::find($id);
+
+        if(!$cekProduct){
+            return redirect()->back()->with('errors', 'Failed');
+        }
+
 
         $user = Auth()->user()->id;
 

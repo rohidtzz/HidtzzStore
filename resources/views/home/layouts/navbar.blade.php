@@ -193,7 +193,7 @@
                     <a class="btn btn-outline-dark" href="{{ url('cart') }}">
                         <i class="bi-cart-fill me-1"></i>
                         Cart
-                        {{-- <span class="badge bg-dark text-white ms-1 rounded-pill">{{ $cart }}</span> --}}
+                        <span class="badge bg-dark text-white ms-1 rounded-pill">{{ $cart }}</span>
                     </a>
                     @else
                     <button style="margin-right:10px " class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#login">

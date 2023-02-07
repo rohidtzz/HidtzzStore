@@ -10,6 +10,8 @@ use App\Models\Cart;
 use App\Models\Transaction;
 use App\Models\Shipping;
 
+use Validator;
+
 use Carbon\Carbon;
 
 
@@ -21,6 +23,16 @@ class TransactionController extends Controller
     {
 
         // dd($request->all());
+
+        $validator = Validator::make($request->all(), [
+            'metode' => ['required', 'string'],
+            'totals' => ['required', 'integer'],
+            'fee' => ['required','integer'],
+        ]);
+
+        if($validator->fails()) {
+            return back()->with('errors', $validator->messages())->withInput();
+        }
 
         $users = Auth()->user()->id;
 
@@ -111,15 +123,16 @@ class TransactionController extends Controller
         }
 
         $vaNumber = $datas[0]->vaNumber;
-
+        $users = Auth()->user()->id;
+        $cart = Cart::where('user_id',$users)->count();
         if($datas[0]->qr == null){
             $qr = false;
-            return view('home.transaction.detail',compact('datas','data','status','total','qr','vaNumber','fee','subtotal'));
+            return view('home.transaction.detail',compact('datas','data','status','total','qr','vaNumber','fee','subtotal','cart'));
         }
 
         // dd($status);
 
-        return view('home.transaction.detail',compact('datas','data','status','total','qr','vaNumber','fee','subtotal'));
+        return view('home.transaction.detail',compact('datas','data','status','total','qr','vaNumber','fee','subtotal','cart'));
 
 
     }
@@ -131,8 +144,9 @@ class TransactionController extends Controller
         $users = Auth()->user()->id;
 
         $data = Transaction::where('user_id',$users)->get();
+        $cart = Cart::where('user_id',$users)->count();
 
-        return view('home.transaction',compact('data'));
+        return view('home.transaction',compact('data','cart'));
 
 
     }
@@ -140,13 +154,13 @@ class TransactionController extends Controller
     public function show_all()
     {
 
-        // $users = Auth()->user()->id;
+        $users = Auth()->user()->id;
 
         $data = Transaction::all();
         // dd($data);
 
-
-        return view('home.transaction',compact('data'));
+        $cart = Cart::where('user_id',$users)->count();
+        return view('home.transaction',compact('data','cart'));
 
 
     }
