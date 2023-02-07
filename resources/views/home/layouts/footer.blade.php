@@ -39,7 +39,7 @@
 
               <!--Grid column-->
             </div>
-            <br>
+            {{-- <br>
             <section class="mb-4">
                 <h6 class="text-uppercase fw-bold mb-4">Maps</h6>
 
@@ -62,7 +62,7 @@
                     <div style="overflow:hidden;width: 500px;position: relative;"><iframe width="500" height="440" src="https://maps.google.com/maps?width=500&amp;height=440&amp;hl=en&amp;q=-6.220118%2C106.686300+(Title)&amp;ie=UTF8&amp;t=&amp;z=10&amp;iwloc=B&amp;output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe><div style="position: absolute;width: 80%;bottom: 10px;left: 0;right: 0;margin-left: auto;margin-right: auto;color: #000;text-align: center;"><small style="line-height: 1.8;font-size: 2px;background: #fff;">Powered by <a href="https://embedgooglemaps.com/">Embed Google Maps</a> & <a href="https://spindelharpan.nu/">spindelharpan mobil</a></small></div><style>#gmap_canvas img{max-width:none!important;background:none!important}</style></div><br />
                 </div>
 
-            </section>
+            </section> --}}
 
             <section class="mb-4">
                 <!-- Facebook -->
@@ -96,7 +96,7 @@
 
             <!--Grid row-->
           </section>
-          <br>
+          {{-- <br> --}}
 
           <!-- Section: Links -->
         </div>
