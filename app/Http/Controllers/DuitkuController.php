@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Models\Transaction;
+
 class DuitkuController extends Controller
 {
 
-    public function RequestTransaction($metode,$detailBarang){
+    public function RequestTransaction($metode,$detailBarang,$fee,$d){
 
         $user = auth()->user();
         // dd($detailBarang);
@@ -36,68 +38,6 @@ class DuitkuController extends Controller
         $returnUrl = 'https://store.hidtzz.my.id/transaction/'.$merchantOrderId; // url untuk redirect
         $expiryPeriod = 10; // atur waktu kadaluarsa dalam hitungan menit
         $signature = md5($merchantCode . $merchantOrderId . $paymentAmount . $apiKey);
-
-        // Customer Detail
-        // $firstName = "John";
-        // $lastName = "Doe";
-
-        // // Address
-        // $alamat = "Jl. Kembangan Raya";
-        // $city = "Jakarta";
-        // $postalCode = "11530";
-        // $countryCode = "ID";
-
-        // $address = array(
-        //     'firstName' => $firstName,
-        //     'lastName' => $lastName,
-        //     'address' => $alamat,
-        //     'city' => $city,
-        //     'postalCode' => $postalCode,
-        //     'phone' => $phoneNumber,
-        //     'countryCode' => $countryCode
-        // );
-
-        // $customerDetail = array(
-        //     'firstName' => $firstName,
-        //     'lastName' => $lastName,
-        //     'email' => $email,
-        //     'phoneNumber' => $phoneNumber,
-        //     'billingAddress' => $address,
-        //     'shippingAddress' => $address
-        // );
-
-        // $item1 = array(
-        //     'name' => 'Test Item 1',
-        //     'price' => 10000,
-        //     'quantity' => 1);
-
-        // $item2 = array(
-        //     'name' => 'Test Item 2',
-        //     'price' => 30000,
-        //     'quantity' => 3);
-
-        // $itemDetails = array(
-        //     $item1, $item2
-        // );
-
-        // dd($itemDetails);
-
-        /*Khusus untuk metode pembayaran OL dan SL
-        $accountLink = array (
-            'credentialCode' => '7cXXXXX-XXXX-XXXX-9XXX-944XXXXXXX8',
-            'ovo' => array (
-                'paymentDetails' => array (
-                    0 => array (
-                        'paymentType' => 'CASH',
-                        'amount' => 40000,
-                    ),
-                ),
-            ),
-            'shopee' => array (
-                'useCoin' => false,
-                'promoId' => '',
-            ),
-        );*/
 
         $params = array(
             'merchantCode' => $merchantCode,
@@ -142,24 +82,71 @@ class DuitkuController extends Controller
         if($httpCode == 200)
         {
             $result = json_decode($request, true);
-            // dd($result);
-            return $result;
-            // dd($result);
-            // header('location: '. $result['paymentUrl']);
-            // echo "paymentUrl :". $result['paymentUrl'] . "<br />";
-            // echo "merchantCode :". $result['merchantCode'] . "<br />";
-            // echo "reference :". $result['reference'] . "<br />";
-            // echo "vaNumber :". $result['vaNumber'] . "<br />";
-            // echo "amount :". $result['amount'] . "<br />";
-            // echo "statusCode :". $result['statusCode'] . "<br />";
-            // echo "statusMessage :". $result['statusMessage'] . "<br />";
+            $a = json_encode($result,true);
+            $response = json_decode($a);
+
+            if($metode == 'SP'){
+
+
+                $trans = Transaction::create([
+                    'amount' => $response->amount,
+                    'reference' => $response->reference,
+                    'merchant_code' => $response->merchantCode,
+                    'data' => json_encode($d),
+                    'status_message' => "UNPAID",
+                    'user_id' => $user->id,
+                    'qr' => $response->qrString,
+                    'fee' => $fee,
+                    // 'sign' => $response->signature,
+                    // 'qr' => $response->qrString,
+                ]);
+
+            }else if($metode == "DA"){
+                $trans = Transaction::create([
+                    'amount' => $response->amount,
+                    'reference' => $response->reference,
+                    'merchant_code' => $response->merchantCode,
+                    'data' => json_encode($d),
+                    'status_message' => "UNPAID",
+                    'user_id' => $user->id,
+                    'paymentUrl' => $response->paymentUrl,
+                    'fee' => $fee,
+                    // 'sign' => $response->signature
+                    // 'qr' => $response->qrString,
+                ]);
+            }else{
+                $trans = Transaction::create([
+                    'amount' => $response->amount,
+                    'reference' => $response->reference,
+                    'merchant_code' => $response->merchantCode,
+                    'data' => json_encode($d),
+                    'status_message' => "UNPAID",
+                    'user_id' => $user->id,
+                    'vaNumber' => $response->vaNumber,
+                    'paymentUrl' => $response->paymentUrl,
+                    'fee' => $fee,
+                    // 'sign' => $response->signature
+                    // 'qr' => $response->qrString,
+                ]);
+
+            }
+
+            $response = [
+                'code' => 200,
+                'reference' =>$response->reference
+            ];
+
+            return $response;
         }
         else
         {
-            $request = json_decode($request);
-            $error_message = "Server Error " . $httpCode ." ". $request->Message;
-            dd($request);
-            echo $error_message;
+            // $request = json_decode($request);
+            // $error_message = "Server Error " . $httpCode ." ". $request->Message;
+            $response = [
+                'code' => 200,
+                'refernces'
+            ];
+            return 400;
         }
     }
 

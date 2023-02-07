@@ -12,10 +12,6 @@ use App\Models\Shipping;
 
 use Carbon\Carbon;
 
-use BaconQrCode\Renderer\ImageRenderer;
-use BaconQrCode\Renderer\Image\ImagickImageBackEnd;
-use BaconQrCode\Renderer\RendererStyle\RendererStyle;
-use BaconQrCode\Writer;
 
 class TransactionController extends Controller
 {
@@ -25,7 +21,6 @@ class TransactionController extends Controller
     {
 
         // dd($request->all());
-        // $product = Product::find($request->product_id);
 
         $users = Auth()->user()->id;
 
@@ -33,12 +28,8 @@ class TransactionController extends Controller
             return redirect()->back()->with('errors','invalid');
         }
 
-        // if(!Order::where('user_id',$users)->where('status', 'pending')->get()){
-        //     return redirect()->back()->with('errors','invalid');
-        // }
 
         $product = Cart::with('product')->where('user_id',$users)->get();
-        // dd($product);
 
         $cart = Cart::where('user_id',$users)->get();
 
@@ -51,34 +42,15 @@ class TransactionController extends Controller
             ];
         }
 
-        // dd($d);
-
         foreach($product as $l){
 
             $j[] = Product::find($l->product_id);
             $m[] = $l;
-            // $m[] = $l;
 
 
         }
 
-        // foreach($m as $p){
-        //     $h[] = $p->qty;
-        // }
-
-        // dd($m);
-        // foreach($m as $o){
-        //     $f = $o->qty;
-        // }
-
-
-
-
-            // dd($b);
-
         foreach($m as $k){
-
-            // dd($k);
 
             for($x = 0; $x < $k->qty; $x++){
                 $datas[] = [
@@ -88,13 +60,6 @@ class TransactionController extends Controller
                     "image_url"=> Product::find($k->product_id)->image
                 ];
             }
-                // $b[] = [
-                //     "name" => Product::find($k->product_id)->name,
-                //     "price" => Product::find($k->product_id)->price,
-                //     "quantity" => 1
-                // ];
-
-
 
         }
 
@@ -109,158 +74,23 @@ class TransactionController extends Controller
 
         }
 
-
-
-
-
-
-        // dd($datas);
-
         foreach($datas as $dat){
             $detailBarang[] = $dat;
         }
 
-        // dd($kjs);
-        // Order::create([
-        //     'data' => json_encode($b),
-        //     'user_id' => $users,
-        //     'status' => 'pending'
-        // ]);
-
-        // dd($request->totals);
 
         $duitku = new DuitkuController;
 
-        $response = $duitku->requestTransaction($request->metode,$detailBarang);
+        $response = $duitku->requestTransaction($request->metode,$detailBarang,$request->fee,$d);
 
-        // dd($response);
+        // dd($response['code']);
 
-        // $product = Order::where('user_id', $users)->get();
-
-        // $method = $request->method;
-        // dd($request->all());
-
-        // $tripay = new TripayController;
-
-        // $tipa = $tripay->requestTransaction($method,$kjs);
-
-        // dd($tipa->qr_url);
-
-        // dd($kjs);
-
-
-
-        Cart::where('user_id',$users)->delete();
-        $a = json_encode($response,true);
-        $response = json_decode($a);
-
-        // dd($response);
-
-        if($request->metode == 'SP'){
-
-
-            $trans = Transaction::create([
-                'amount' => $response->amount,
-                'reference' => $response->reference,
-                'merchant_code' => $response->merchantCode,
-                'data' => json_encode($d),
-                'status_message' => "UNPAID",
-                'user_id' => $users,
-                // 'expired' => $response->expired_time,
-                'qr' => $response->qrString,
-                'fee' => $request->fee,
-                // 'sign' => $response->signature,
-            ]);
-
-            // $shipping = Shipping::create([
-            //     'data' => json_encode($push),
-            //     'status_message' => "proses",
-            //     // 'cost' => $request->cost,
-            //     'cost' => $request->cost,
-            //     'user_id' => $users,
-            //     'transaction_id'=> $trans->id
-            // ]);
-        }else if($request->metode == "DA"){
-            $trans = Transaction::create([
-                'amount' => $response->amount,
-                'reference' => $response->reference,
-                'merchant_code' => $response->merchantCode,
-                'data' => json_encode($d),
-                'status_message' => "UNPAID",
-                'user_id' => $users,
-                'paymentUrl' => $response->paymentUrl,
-                'fee' => $request->fee,
-                // 'sign' => $response->signature
-                // 'qr' => $response->qrString,
-            ]);
-        }else{
-            $trans = Transaction::create([
-                'amount' => $response->amount,
-                'reference' => $response->reference,
-                'merchant_code' => $response->merchantCode,
-                'data' => json_encode($d),
-                'status_message' => "UNPAID",
-                'user_id' => $users,
-                'vaNumber' => $response->vaNumber,
-                'paymentUrl' => $response->paymentUrl,
-                'fee' => $request->fee,
-                // 'sign' => $response->signature
-                // 'qr' => $response->qrString,
-            ]);
-            // $shipping = Shipping::create([
-            //     'data' => json_encode($push),
-            //     'status' => "proses",
-            //     // 'cost' => $request->cost,
-            //     'cost' => $request->cost,
-            //     'user_id' => $users,
-            //     'transaction_id'=> $trans->id
-            // ]);
+        if($response['code'] != 200){
+            return redirect('/checkout')->with('errors','Transaction gagal');
         }
 
-        // if($tipa->payment_method == 'QRIS' || $tipa->payment_method == 'QRISC' || $tipa->payment_method == 'QRIS2'){
-
-
-        //     $trans = Transaction::create([
-        //         'amount' => $tipa->amount,
-        //         'reference' => $tipa->reference,
-        //         'merchant_ref' => $tipa->merchant_ref,
-        //         'data' => json_encode($d),
-        //         'status' => $tipa->status,
-        //         'user_id' => $users,
-        //         'expired' => $tipa->expired_time,
-        //         'qr' => $tipa->qr_url,
-        //     ]);
-
-        //     // $shipping = Shipping::create([
-        //     //     'data' => json_encode($push),
-        //     //     'status' => "proses",
-        //     //     // 'cost' => $request->cost,
-        //     //     'cost' => $request->cost,
-        //     //     'user_id' => $users,
-        //     //     'transaction_id'=> $trans->id
-        //     // ]);
-        // } else{
-        //     $trans = Transaction::create([
-        //         'amount' => $tipa->amount,
-        //         'reference' => $tipa->reference,
-        //         'merchant_ref' => $tipa->merchant_ref,
-        //         'data' => json_encode($d),
-        //         'status' => $tipa->status,
-        //         'expired' => $tipa->expired_time,
-        //         'user_id' => $users
-        //     ]);
-        //     // $shipping = Shipping::create([
-        //     //     'data' => json_encode($push),
-        //     //     'status' => "proses",
-        //     //     // 'cost' => $request->cost,
-        //     //     'cost' => $request->cost,
-        //     //     'user_id' => $users,
-        //     //     'transaction_id'=> $trans->id
-        //     // ]);
-        // }
-
-
-        return redirect('transaction/'.$response->reference)->withSuccess('Transaction berhasil di buat');
+        Cart::where('user_id',$users)->delete();
+        return redirect('transaction/'.$response['reference'])->withSuccess('Transaction berhasil di buat');
 
     }
 
@@ -291,44 +121,6 @@ class TransactionController extends Controller
 
         return view('home.transaction.detail',compact('datas','data','status','total','qr','vaNumber','fee','subtotal'));
 
-        // $tripay = new TripayController;
-
-        // $data = $tripay->detailTransaction($references);
-
-        // // dd($data);
-        // $data_kita = Transaction::where('reference',$references)->get('qr');
-
-        // if(json_decode($data)->success == false){
-        //     return redirect()->back()->with('errors','reference not found');
-        // }
-        //     $data = json_decode($data)->data;
-
-        //     if(!$data_kita){
-        //         return redirect()->back()->with('errors','reference not found');
-        //     }
-
-
-        // $total_fee = $data->total_fee;
-        // $total = $data->amount;
-        // $payment_method = $data->payment_method;
-
-        // $qr = Transaction::where('reference',$references)->get('qr')[0]->qr;
-
-        // $status = Transaction::where('reference',$references)->first()->status;
-        // $datas = Transaction::where('reference',$references)->get()[0];
-        // $exp = $datas->expired;
-        // $datas = json_decode($datas->data);
-
-        // $transs = Transaction::where('reference',$references)->first();
-        // $pengiriman = Shipping::where('transaction_id',$transs->id)->first();
-
-
-
-        // if($qr == null){
-        //     $qr = false;
-        //     return view('transaction.detail',compact('data','total_fee','total','payment_method','qr','status','datas','exp','pengiriman'));
-        // }
-        // return view('home.transaction.detail',compact('data','total_fee','total','payment_method','qr','status','datas','exp','pengiriman'));
 
     }
 
