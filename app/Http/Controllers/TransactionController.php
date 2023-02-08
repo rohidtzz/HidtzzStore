@@ -179,7 +179,7 @@ class TransactionController extends Controller
         // dd($detailBarang);
         $duitku = new DuitkuController;
 
-        $response = $duitku->requestTransactionPulsa($request->harga,"SP",$detailBarang);
+        $response = $duitku->requestTransactionPulsa($request->harga,"BR");
 
 
         $a = json_encode($response,true);
@@ -187,7 +187,6 @@ class TransactionController extends Controller
 
 
         $users = Auth()->user()->id;
-
 
         $trans = Transaction::create([
             'amount' => $response->amount,
@@ -197,11 +196,30 @@ class TransactionController extends Controller
             'status_message' => "UNPAID",
             'user_id' => $users,
             // 'expired' => $response->expired_time,
-            'qr' => $response->qrString,
-            // 'vaNumber' => $response->vaNumber,
+            // 'qr' => $response->qrString,
+            'type' => 'digital',
+            'code_product' => $request->code,
+            'vaNumber' => $response->vaNumber,
             // 'fee' => $request->fee,
             // 'sign' => $response->signature,
         ]);
+
+
+        // $trans = Transaction::create([
+        //     'amount' => $response->amount,
+        //     'reference' => $response->reference,
+        //     'merchant_code' => $response->merchantCode,
+        //     'data' => json_encode($detailBarang),
+        //     'status_message' => "UNPAID",
+        //     'user_id' => $users,
+        //     // 'expired' => $response->expired_time,
+        //     'qr' => $response->qrString,
+        //     'type' => 'digital',
+        //     'code_product' => $request->code,
+        //     // 'vaNumber' => $response->vaNumber,
+        //     // 'fee' => $request->fee,
+        //     // 'sign' => $response->signature,
+        // ]);
 
         // $trans = Transaction::create([
         //     'amount' => $tripaypulsa->amount,

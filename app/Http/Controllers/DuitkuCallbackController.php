@@ -60,10 +60,22 @@ class DuitkuCallbackController extends Controller
                     ]);
                 }
 
-                $Transaction->update(['status_message' => "SUCCESS"]);
-                return Response::json([
-                    'success' => true
-                ]);
+                if($Transaction->type == 'digital'){
+                    $iak = new IakController;
+
+                    $response = $iak->topup_pulsa($Transaction->customer_id,$Transaction->product_code,$Transaction->reference);
+
+                    $Transaction->update(['status_message' => "SUCCESS"]);
+                    return Response::json([
+                        'success' => true
+                    ]);
+                } else {
+                    $Transaction->update(['status_message' => "SUCCESS"]);
+                    return Response::json([
+                        'success' => true
+                    ]);
+                }
+
                 //Callback tervalidasi
                 //Silahkan rubah status transaksi anda disini
                 // file_put_contents('callback.txt', "* Success *\r\n\r\n", FILE_APPEND | LOCK_EX);

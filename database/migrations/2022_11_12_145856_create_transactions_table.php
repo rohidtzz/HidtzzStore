@@ -22,6 +22,9 @@ return new class extends Migration
             $table->string('vaNumber')->nullable();
             $table->string('paymentUrl')->nullable();
             $table->string('fee')->nullable();
+            $table->string('customer_id')->nullable();
+            $table->string('code_product')->nullable();
+            $table->enum('type',['digital','fisik'])->nullable();
             $table->json('data');
             $table->string('expired')->nullable();
             $table->enum('status_message',['SUCCESS','UNPAID']);

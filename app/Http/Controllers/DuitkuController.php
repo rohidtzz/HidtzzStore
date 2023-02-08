@@ -150,7 +150,7 @@ class DuitkuController extends Controller
         }
     }
 
-    public function RequestTransactionPulsa($amount,$metode,$detailBarang){
+    public function RequestTransactionPulsa($amount,$metode){
 
         $user = auth()->user();
         // dd($detailBarang);

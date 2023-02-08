@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Models\Cart;
+
+use Auth;
+
 class LayananDigitalController extends Controller
 {
 
@@ -98,10 +102,14 @@ class LayananDigitalController extends Controller
 
     public function iak_kategori($kategori){
 
+        $users = Auth()->user()->id;
 
+        $cart = Cart::where('user_id',$users)->count();
+
+        // dd($cart);
         if($kategori == 'pulsa'){
 
-            return view('home.layanan.pulsa');
+            return view('home.layanan.pulsa',compact('cart'));
 
         }else if($kategori == 'dana'){
 

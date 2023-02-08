@@ -153,7 +153,7 @@
     }
 </script> --}}
 
-{{-- <div class="container" style="margin-top: 2%">
+<div class="container" style="margin-top: 2%">
     <div class="row">
         <div class="col-12">
             <div class="card" style="margin: 5%">
@@ -319,7 +319,7 @@
             },
         });
     }
-</script> --}}
+</script>
 
 <section class="py-5">
     <div class="container px-4 px-lg-5 mt-5">

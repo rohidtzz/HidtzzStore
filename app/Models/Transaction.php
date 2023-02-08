@@ -25,6 +25,8 @@ class Transaction extends Model
         'product_code',
         'fee',
         'sign',
+        'type',
+        'code_product'
     ];
 
     // protected $fillable =
