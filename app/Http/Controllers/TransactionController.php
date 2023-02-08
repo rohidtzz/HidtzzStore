@@ -195,6 +195,7 @@ class TransactionController extends Controller
             'data' => json_encode($detailBarang),
             'status_message' => "UNPAID",
             'user_id' => $users,
+            'customer_id' => $request->nohp,
             // 'expired' => $response->expired_time,
             // 'qr' => $response->qrString,
             'type' => 'digital',
