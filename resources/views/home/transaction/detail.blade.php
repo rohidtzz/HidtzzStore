@@ -176,6 +176,8 @@ body{
                                     <span class="value badge bg-danger">{{ EXPIRED }}</span>
                                     @elseif ($status == "FAILED")
                                     <span class="value badge bg-danger">{{ $status }}</span>
+                                    @elseif ($status == "proses")
+                                    <span class="value badge bg-danger">{{ $status }}</span>
                                     @else
                                     <span class="value">{{ $status }}</span>
                                 @endif</h6>
