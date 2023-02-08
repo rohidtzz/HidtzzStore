@@ -293,6 +293,8 @@ body{
 			 					{{-- <a type="button" href="{{ url('/checkout') }}" class="btn btn-primary btn-lg btn-block">Checkout</a> --}}
                                 @if ($status == "SUCCESS")
 
+                                @elseif ($status == "proses")
+
                                 @else
                                     {{-- <h4 style="margin-top:20px">Instruksi pembayaran</h4> --}}
                                     {{-- @foreach ($data->instructions as $ins)
