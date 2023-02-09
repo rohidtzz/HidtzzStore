@@ -34,6 +34,7 @@ use Illuminate\Http\Request;
 Route::get('/',[WelcomeController::class,'index']);
 
 Route::get('/stock',[ProductController::class,'stock']);
+Route::get('/detail/product/{id}',[WelcomeController::class,'detail']);
 
 
 
@@ -87,7 +88,7 @@ Route::group(['middleware' => ['role:user,staff,admin']], function () {
 
     route::get('/kalkulator/{amount}', [DuitkuController::class,'KalkulatorBiaya']);
 
-    Route::get('/detail/product/{id}',[WelcomeController::class,'detail']);
+
 
 
 });

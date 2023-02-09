@@ -324,14 +324,11 @@
 <section class="py-1">
     <div class="container px-4 px-lg-5 mt-5">
         <div class="row gx-4 gx-lg-5 row-cols-md-3 row-cols-xl-4 justify-content-center">
-
             @foreach ($product as $data )
                 <div class="col-12 col-xl-3 col-md-5 col-sm-12" style="margin-top: 20px">
-                    <a href="/detail/product/{{$data->id}}" style="text-decoration: none;color:black">
-
-                        <div class="col mb-5">
-                            <div class="card h-100">
-
+                    <div class="col mb-5">
+                        <div class="card h-100">
+                            <a href="/detail/product/{{$data->id}}" style="text-decoration: none;color:black">
                                 <img class="img-thumbnail" width="100%" style="height: 300px" src="{{ asset('product/img/'.$data->image) }}" alt="{{ $data->image }}" />
 
                                 <div class="card-body p-4">
@@ -348,21 +345,22 @@
                                     </div> --}}
 
                                 </div>
-                                <!-- Product actions-->
-                                <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                    <div class="text-center">
 
-                                        @if (Auth::Check())
-                                            <a class="btn btn-outline-dark mt-auto" href="{{ url('cart/'.$data->id.'/create') }}">Add to cart</a>
-                                            @else
-                                            <button class="btn btn-outline-dark mt-auto" data-bs-toggle="modal" data-bs-target="#login">Buy NOW!</button>
-                                        @endif
+                            </a>
+                            <!-- Product actions-->
+                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                <div class="text-center">
 
-                                    </div>
+                                    @if (Auth::Check())
+                                        <a class="btn btn-outline-dark mt-auto" href="{{ url('cart/'.$data->id.'/create') }}">Add to cart</a>
+                                        @else
+                                        <button class="btn btn-outline-dark mt-auto" data-bs-toggle="modal" data-bs-target="#login">Buy NOW!</button>
+                                    @endif
+
                                 </div>
                             </div>
                         </div>
-                    </a>
+                    </div>
                 </div>
             @endforeach
         </div>
