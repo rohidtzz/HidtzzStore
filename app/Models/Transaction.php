@@ -21,27 +21,31 @@ class Transaction extends Model
         'expired',
         'qr',
         'vaNumber',
-        'customer_id',
-        'product_code',
         'fee',
-        'sign',
         'type',
-        'code_product'
     ];
 
     // protected $fillable =
     // [
     //     'amount',
     //     'reference',
-    //     'merchant_ref',
-    //     'status',
+    //     'merchant_code',
+    //     'status_message',
     //     'data',
+    //     'paymentUrl',
     //     'user_id',
     //     'expired',
     //     'qr',
+    //     'vaNumber',
     //     'customer_id',
-    //     'product_code'
+    //     'product_code',
+    //     'fee',
+    //     'sign',
+    //     'type',
+    //     'code_product'
     // ];
+
+
 
     public function user(){
         return $this->belongsTo(User::class);

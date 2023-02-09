@@ -85,27 +85,9 @@ Route::group(['middleware' => ['role:user,staff,admin']], function () {
     Route::get('/transaction/{references}',[TransactionController::class,'detail']);
 
 
-
-    Route::get('/operator/{category_id}', [LayananDigitalController::class,'operator']);
-
-    Route::get('/product/{operator_id}/{category_id}', [LayananDigitalController::class,'product']);
-
-    route::get('/pricelist/pulsa', [LayananDigitalController::class,'pricelist_pulsa']);
-    // route::get('/pricelist/dana', [LayananDigitalController::class,'pricelist_dana']);
-    // route::get('/pricelist/ovo', [LayananDigitalController::class,'pricelist_ovo']);
-    // route::get('/pricelist/gopay', [LayananDigitalController::class,'pricelist_gojek']);
-
-    route::get('/topup', [TopupController::class,'index']);
-
-    route::get('/beli/{kategori}', [LayananDigitalController::class,'iak_kategori']);
-
-    route::get('/filter/pulsa/{code}', [LayananDigitalController::class,'filter_pulsa']);
-
-    route::get('/prefix/pulsa/{operator}', [LayananDigitalController::class,'prefix_pulsa']);
-
-    route::post('/transaction/pulsa', [TransactionController::class,'transaction_pulsa']);
-
     route::get('/kalkulator/{amount}', [DuitkuController::class,'KalkulatorBiaya']);
+
+    Route::get('/detail/product/{id}',[WelcomeController::class,'detail']);
 
 
 });
@@ -117,3 +99,22 @@ route::post('/callback/iak', [IakCallbackController::class,'handle']);
 // route::post('/callback', [DuitkuCallbackController::class,'handle']);
 route::post('/callback', [TripayCallbackController::class,'handle']);
 
+
+// Route::get('/operator/{category_id}', [LayananDigitalController::class,'operator']);
+
+// Route::get('/product/{operator_id}/{category_id}', [LayananDigitalController::class,'product']);
+
+// route::get('/pricelist/pulsa', [LayananDigitalController::class,'pricelist_pulsa']);
+// route::get('/pricelist/dana', [LayananDigitalController::class,'pricelist_dana']);
+// route::get('/pricelist/ovo', [LayananDigitalController::class,'pricelist_ovo']);
+// route::get('/pricelist/gopay', [LayananDigitalController::class,'pricelist_gojek']);
+
+// route::get('/topup', [TopupController::class,'index']);
+
+// route::get('/beli/{kategori}', [LayananDigitalController::class,'iak_kategori']);
+
+// route::get('/filter/pulsa/{code}', [LayananDigitalController::class,'filter_pulsa']);
+
+// route::get('/prefix/pulsa/{operator}', [LayananDigitalController::class,'prefix_pulsa']);
+
+// route::post('/transaction/pulsa', [TransactionController::class,'transaction_pulsa']);

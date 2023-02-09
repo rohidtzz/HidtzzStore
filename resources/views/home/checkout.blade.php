@@ -261,12 +261,12 @@ body{
                                                         <div class="col-md-5 product-name">
                                                             <div class="product-name">
                                                                 <p href="#">{{ App\Models\Product::find($data->product_id)->name }}</p>
-                                                                <div class="product-info">
-                                                                    <span class="value">{{ App\Models\Product::find($data->product_id)->description }}</span>
-                                                                    {{-- <div>Display: <span class="value">5 inch</span></div>
+                                                                {{-- <div class="product-info">
+                                                                    <span class="value">{!! substr(App\Models\Product::find($data->product_id)->description,0,400) !!}.....</span>
+                                                                    <div>Display: <span class="value">5 inch</span></div>
                                                                     <div>RAM: <span class="value">4GB</span></div>
-                                                                    <div>Memory: <span class="value">32GB</span></div> --}}
-                                                                </div>
+                                                                    <div>Memory: <span class="value">32GB</span></div>
+                                                                </div> --}}
                                                             </div>
                                                         </div>
                                                         <div class="col-md-4 quantity">
@@ -287,7 +287,7 @@ body{
                                                         </div>
                                                         <div class="col-md-3 price">
                                                             {{-- <label for="quantity">Price: </label><br> --}}
-                                                            <span class="fst-italic" style="padding-bottom: 50px">&nbsp; Rp.{{ number_format($data->subtotal) }}</span>
+                                                            <span class="fst-italic" style="padding-bottom: 50px">Rp.{{ number_format($data->subtotal) }}</span>
                                                         </div>
                                                     </div>
                                                 </div>

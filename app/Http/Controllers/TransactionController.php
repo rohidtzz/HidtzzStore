@@ -109,23 +109,31 @@ class TransactionController extends Controller
     public function detail($references)
     {
 
-        $datas = Transaction::where('reference',$references)->get();
+        if($references == null || $references == ''){
+            return redirect('/transaction')->with('errors','Transaction not found');
+        }
 
-        $status = $datas[0]->status_message;
-        $total = $datas[0]->amount;
-        $qr = $datas[0]->qr;
-        $fee = $datas[0]->fee;
-        $data = json_decode($datas[0]->data);
+        $datas = Transaction::where('reference',$references)->first();
+
+        if(!$datas){
+            return redirect('/transaction')->with('errors','Transaction not found');
+        }
+
+        $status = $datas->status_message;
+        $total = $datas->amount;
+        $qr = $datas->qr;
+        $fee = $datas->fee;
+        $data = json_decode($datas->data);
 
         $subtotal = 0;
         foreach($data as $k){
             $subtotal += $k->subtotal;
         }
 
-        $vaNumber = $datas[0]->vaNumber;
+        $vaNumber = $datas->vaNumber;
         $users = Auth()->user()->id;
         $cart = Cart::where('user_id',$users)->count();
-        if($datas[0]->qr == null){
+        if($datas->qr == null){
             $qr = false;
             return view('home.transaction.detail',compact('datas','data','status','total','qr','vaNumber','fee','subtotal','cart'));
         }

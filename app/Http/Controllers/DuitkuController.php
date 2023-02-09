@@ -97,6 +97,7 @@ class DuitkuController extends Controller
                     'user_id' => $user->id,
                     'qr' => $response->qrString,
                     'fee' => $fee,
+                    'type' => 'FISIK'
                     // 'sign' => $response->signature,
                     // 'qr' => $response->qrString,
                 ]);
@@ -111,6 +112,7 @@ class DuitkuController extends Controller
                     'user_id' => $user->id,
                     'paymentUrl' => $response->paymentUrl,
                     'fee' => $fee,
+                    'type' => 'FISIK'
                     // 'sign' => $response->signature
                     // 'qr' => $response->qrString,
                 ]);
@@ -125,6 +127,7 @@ class DuitkuController extends Controller
                     'vaNumber' => $response->vaNumber,
                     'paymentUrl' => $response->paymentUrl,
                     'fee' => $fee,
+                    'type' => 'FISIK'
                     // 'sign' => $response->signature
                     // 'qr' => $response->qrString,
                 ]);

@@ -45,8 +45,8 @@
                                             @endforeach --}}
 
                                         </div>
-                                        <div class="w-100"></div>
-                                        <div class="text-muted">{{ App\Models\Product::find($items->product_id)->description }}</div>
+                                        <div class="w-100"></div><br>
+                                        {{-- <div class="text-muted">{{ App\Models\Product::find($items->product_id)->description }}</div> --}}
                                         <div style="font-weight: 700">
                                             Rp {{number_format($items->subtotal)}}
 

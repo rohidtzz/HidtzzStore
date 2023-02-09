@@ -7,9 +7,9 @@
     <div class="row" style="text-align: center">
         @foreach ($data as $datas)
 
-            <div class="col-12 col-sm-12 col-xl-6" style="display:inline-block;vertical-align: middle;float: none;">
-                <a href="{{ url('transaction/'.$datas->reference) }}" style="text-decoration: none;color:black">
-                    <div class="card" style="margin: 5%">
+            <div class="col-12 col-sm-12 col-xl-4 col-md-6" style="display:inline-block;vertical-align: middle;float: none;">
+                <div class="card" style="margin: 5%">
+                    <a href="{{ url('transaction/'.$datas->reference) }}" style="text-decoration: none;color:black">
                         <div class="card-header">
                             <div class="row">
                                 <div class="col text-start">
@@ -43,7 +43,7 @@
                         </div>
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-4 col-xl-3 col-md-3  text-start">
+                                <div class="col col-4 col-xl-4 col-md-4">
                                     {{-- @php
                                         echo reset($datas->data);
                                     @endphp --}}
@@ -117,8 +117,8 @@
                                 <div class="col col-6  text-start">Rp {{number_format($datas->amount)}}</div>
                             </div>
                         </div>
-                    </div>
-                </a>
+                    </a>
+                </div>
             </div>
         @endforeach
     </div>

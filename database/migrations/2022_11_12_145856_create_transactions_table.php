@@ -22,9 +22,7 @@ return new class extends Migration
             $table->string('vaNumber')->nullable();
             $table->string('paymentUrl')->nullable();
             $table->string('fee')->nullable();
-            $table->string('customer_id')->nullable();
-            $table->string('code_product')->nullable();
-            $table->enum('type',['digital','fisik'])->nullable();
+            $table->enum('type',['DIGITAL','FISIK'])->nullable();
             $table->json('data');
             $table->string('expired')->nullable();
             $table->enum('status_message',['PROCESS','SUCCESS','UNPAID','FAILED ']);
@@ -32,21 +30,27 @@ return new class extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
+
         // Schema::create('transactions', function (Blueprint $table) {
         //     $table->id();
         //     $table->string('amount');
         //     $table->string('reference');
-        //     $table->string('merchant_ref')->nullable();
+        //     $table->string('merchant_code')->nullable();
         //     $table->string('qr')->nullable();
-        //     $table->json('data');
-        //     $table->string('expired');
-        //     $table->enum('status',['PAID','UNPAID']);
-        //     $table->unsignedBigInteger('user_id');
+        //     $table->string('vaNumber')->nullable();
+        //     $table->string('paymentUrl')->nullable();
+        //     $table->string('fee')->nullable();
         //     $table->string('customer_id')->nullable();
-        //     $table->string('product_code')->nullable();
+        //     $table->string('code_product')->nullable();
+        //     $table->enum('type',['digital','fisik'])->nullable();
+        //     $table->json('data');
+        //     $table->string('expired')->nullable();
+        //     $table->enum('status_message',['PROCESS','SUCCESS','UNPAID','FAILED ']);
+        //     $table->unsignedBigInteger('user_id');
         //     $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
         //     $table->timestamps();
         // });
+
     }
 
     /**

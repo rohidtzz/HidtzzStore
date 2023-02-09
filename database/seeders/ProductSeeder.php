@@ -19,7 +19,35 @@ class ProductSeeder extends Seeder
 
         Product::create([
             'name' => 'baju rajut',
-            'description' => 'ini itu Description product',
+            'jenis' => 'Baju Biasa',
+            'description' => '
+            Produk 100% terjamin New, Original & Authentic!<br>
+            Di impor langsung dari Coach Warehouse di Amerika.<br>
+            <br>
+            Size: 27 (P) x 8 (L) x 17 (T) cm<br>
+            <br>
+            Pembelian Produk sudah termasuk:<br>
+            1. Coach Card Care Instruction<br>
+            2. Dust Bag<br>
+            3. Paper Bag<br>
+            4. Original Receipt<br>
+            5. Certificate of Product<br>
+            6. Price Tag<br>
+            (Semua kelengkapan sama persis seperti saat membeli langsung di store)<br>
+            <br>
+            Kok Harga MURAH?<br>
+            Produk yang kami jual adalah produk factory outlet di luar negri (contoh: US, Eropa, UK dll)<br>
+            <br>
+            Yakin Original?<br>
+            Produk yang kami jual 100% original, Produk yang kami jual langsung dari Pabrik Coach dan karena itu kualitas nya sudah standar dengan produk yang di jual di toko.<br>
+            <br>
+            100% Garansi bila barang yang kami jual palsu!<br>
+            <br>
+            RESELLER ARE WELCOME!<br>
+            (Special Price untuk pembelian diatas 3pcs)<br>
+            <br>
+            Happy Shopping!<br>
+            LuckyWarehouse.',
             'price' => 125000,
             'image' => '1.jpg',
             'stock' => 350,
@@ -27,7 +55,35 @@ class ProductSeeder extends Seeder
 
         Product::create([
             'name' => 'baju ultras',
-            'description' => 'ini itu Description product',
+            'jenis' => 'Baju biasa',
+            'description' => '
+            Produk 100% terjamin New, Original & Authentic!<br>
+            Di impor langsung dari Coach Warehouse di Amerika.<br>
+            <br>
+            Size: 27 (P) x 8 (L) x 17 (T) cm<br>
+            <br>
+            Pembelian Produk sudah termasuk:<br>
+            1. Coach Card Care Instruction<br>
+            2. Dust Bag<br>
+            3. Paper Bag<br>
+            4. Original Receipt<br>
+            5. Certificate of Product<br>
+            6. Price Tag<br>
+            (Semua kelengkapan sama persis seperti saat membeli langsung di store)<br>
+            <br>
+            Kok Harga MURAH?<br>
+            Produk yang kami jual adalah produk factory outlet di luar negri (contoh: US, Eropa, UK dll)<br>
+            <br>
+            Yakin Original?<br>
+            Produk yang kami jual 100% original, Produk yang kami jual langsung dari Pabrik Coach dan karena itu kualitas nya sudah standar dengan produk yang di jual di toko.<br>
+            <br>
+            100% Garansi bila barang yang kami jual palsu!<br>
+            <br>
+            RESELLER ARE WELCOME!<br>
+            (Special Price untuk pembelian diatas 3pcs)<br>
+            <br>
+            Happy Shopping!<br>
+            LuckyWarehouse.',
             'price' => 120000,
             'image' => '2.jpg',
             'stock' => 350,

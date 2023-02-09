@@ -29,4 +29,26 @@ class WelcomeController extends Controller
 
     }
 
+    public function detail($id)
+    {
+
+        $product = Product::find($id);
+
+        if(!$product){
+            return redirect('/')->with('errors','Product not Found');
+        }
+
+        if(Auth::check()){
+            $users = Auth()->user()->id;
+
+            $cart = Cart::where('user_id',$users)->count();
+
+            return view('home.product.detail', compact('product','cart'));
+        }
+
+        return view('home.product.detail',compact('product'));
+
+
+    }
+
 }
