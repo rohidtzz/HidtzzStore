@@ -31,10 +31,29 @@ class IakCallbackController extends Controller
                 ]);
             }
 
-            $Transaction->update(['status_message' => "SUCCESS"]);
+            $Transaction->update(['status_message' => $data['message']]);
             return Response::json([
                 'success' => true
             ]);
+
+        } else{
+
+            $Transaction = Transaction::where('reference', $data['ref_id'])
+            ->where('status_message', '!=', 'SUCCESS')
+            ->first();
+
+            if (! $Transaction) {
+                return Response::json([
+                    'success' => false,
+                    'message' => 'No Transaction found or already paid: ' . $data['ref_id'],
+                ]);
+            }
+
+            $Transaction->update(['status_message' => 'failed']);
+            return Response::json([
+                'success' => true
+            ]);
+
 
         }
 
