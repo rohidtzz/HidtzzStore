@@ -244,9 +244,6 @@ class LayananDigitalController extends Controller
                     "icon_url" => $d->icon_url
                 ];
 
-
-
-
             }
         }
 

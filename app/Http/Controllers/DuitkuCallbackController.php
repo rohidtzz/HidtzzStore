@@ -65,7 +65,7 @@ class DuitkuCallbackController extends Controller
 
                     $response = $iak->topup_pulsa($Transaction->customer_id,$Transaction->code_product,$Transaction->reference);
 
-                    $Transaction->update(['status_message' => "proses"]);
+                    $Transaction->update(['status_message' => "PROCESS"]);
                     return Response::json([
                         'success' => true
                     ]);

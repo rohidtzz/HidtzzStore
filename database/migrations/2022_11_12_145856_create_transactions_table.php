@@ -27,7 +27,7 @@ return new class extends Migration
             $table->enum('type',['digital','fisik'])->nullable();
             $table->json('data');
             $table->string('expired')->nullable();
-            $table->enum('status_message',['proses','SUCCESS','UNPAID']);
+            $table->enum('status_message',['PROCESS','SUCCESS','UNPAID','FAILED ']);
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();

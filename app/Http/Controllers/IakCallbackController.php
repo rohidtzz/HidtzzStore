@@ -6,35 +6,37 @@ use Illuminate\Http\Request;
 
 use App\Models\Cart;
 
+use App\Models\Transaction;
+
 class IakCallbackController extends Controller
 {
     public function handle(Request $request)
     {
 
 
-        $rawRequestInput = file_get_contents("php://input");
+        $data = $request->all();
 
-        $arrRequestInput = json_decode($rawRequestInput, true);
-        // print_r($arrRequestInput);
+        $data = json_decode($data,true);
 
-        $cart = Cart::create([
-            'qty' => '1',
-            'subtotal' => 'asd',
-            'user_id' => 1,
-            'product_id' => 1
-        ]);
+        if($data){
 
-        // $_id = $arrRequestInput['id'];
-        // $_externalId = $arrRequestInput['external_id'];
-        // $_userId = $arrRequestInput['user_id'];
-        // $_status = $arrRequestInput['status'];
-        // $_paidAmount = $arrRequestInput['paid_amount'];
-        // $_paidAt = $arrRequestInput['paid_at'];
-        // $_paymentChannel = $arrRequestInput['payment_channel'];
-        // $_paymentDestination = $arrRequestInput['payment_destination'];
+            $Transaction = Transaction::where('reference', $data['ref_id'])
+            ->where('status_message', '!=', 'SUCCESS')
+            ->first();
 
+            if (! $Transaction) {
+                return Response::json([
+                    'success' => false,
+                    'message' => 'No Transaction found or already paid: ' . $data['ref_id'],
+                ]);
+            }
 
+            $Transaction->update(['status_message' => "SUCCESS"]);
+            return Response::json([
+                'success' => true
+            ]);
 
+        }
 
     }
 }
