@@ -16,7 +16,7 @@ class IakCallbackController extends Controller
 
         $data = $request->all();
 
-        $data = json_decode($data,true);
+        $data = json_decode($data,true)->data;
 
         if($data){
 
