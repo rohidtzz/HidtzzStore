@@ -38,10 +38,13 @@
                     <h2 class="mt-5">
                         Rp. {{ number_format($product->price)}}
                     </h2><br>
-                    <a type="button" href="{{ url('cart/'.$product->id.'/create') }}" class="btn btn-dark btn-rounded mr-1" data-toggle="tooltip" title="" data-original-title="Add to cart">
-                        <i class="fa fa-shopping-cart"></i>
-                    </a>
-                    {{-- <button class="btn btn-primary btn-rounded">Buy Now</button> --}}
+                    @if (Auth::check())
+                        <a type="button" href="{{ url('cart/'.$product->id.'/create') }}" class="btn btn-dark btn-rounded mr-1" data-toggle="tooltip" title="" data-original-title="Add to cart">
+                            <i class="fa fa-shopping-cart"></i>
+                        </a>
+                    @else
+                        <button class="btn btn-primary btn-rounded" data-bs-toggle="modal" data-bs-target="#login">Buy Now</button>
+                    @endif
                     {{-- <h3 class="box-title mt-5">Key Highlights</h3>
                     <ul class="list-unstyled">
                         <li><i class="fa fa-check text-success"></i>Sturdy structure</li>
