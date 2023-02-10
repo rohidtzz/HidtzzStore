@@ -19,7 +19,6 @@ class ProductSeeder extends Seeder
 
         Product::create([
             'name' => 'baju rajut',
-            'jenis' => 'Baju Biasa',
             'description' => '
             Produk 100% terjamin New, Original & Authentic!<br>
             Di impor langsung dari Coach Warehouse di Amerika.<br>
@@ -55,7 +54,6 @@ class ProductSeeder extends Seeder
 
         Product::create([
             'name' => 'baju ultras',
-            'jenis' => 'Baju biasa',
             'description' => '
             Produk 100% terjamin New, Original & Authentic!<br>
             Di impor langsung dari Coach Warehouse di Amerika.<br>

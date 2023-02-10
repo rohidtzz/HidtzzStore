@@ -52,8 +52,13 @@ Route::group(['middleware' => ['role:admin']], function () {
 
     Route::get('/admin/product',[ProductController::class,'index']);
     Route::get('/admin/product/delete/{id}', [ProductController::class,'destroyproduct']);
-    Route::post('/admin/product/create/', [ProductController::class,'create']);
-    Route::post('/admin/product/edit', [ProductController::class,'edit']);
+
+    Route::get('/admin/product/create/', [ProductController::class,'create']);
+    Route::post('/admin/product/store/', [ProductController::class,'store']);
+
+    Route::get('/admin/product/edit/{id}', [ProductController::class,'edit']);
+    Route::post('/admin/product/update', [ProductController::class,'update']);
+
 
 });
 

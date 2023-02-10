@@ -8,6 +8,8 @@ use App\Models\Product;
 
 Use Validator;
 
+use App\Models\Cart;
+
 use File;
 
 class ProductController extends Controller
@@ -15,8 +17,11 @@ class ProductController extends Controller
     public function index()
     {
         $all = Product::all();
+        $users = Auth()->user()->id;
 
-        return view('product.index',compact('all'));
+        $cart = Cart::where('user_id',$users)->count();
+
+        return view('v1.product.index',compact('all','cart'));
     }
 
 
@@ -37,7 +42,43 @@ class ProductController extends Controller
         Product::destroy($id);
 
 
-        return redirect()->back();
+        return redirect()->back()->withSuccess('Product Deleted');
+
+    }
+
+    public function create()
+    {
+
+
+        $users = Auth()->user()->id;
+
+        $cart = Cart::where('user_id',$users)->count();
+
+        return view('v1.product.create',compact('cart'));
+
+
+    }
+
+    public function edit($id)
+    {
+
+        if($id == null || $id == ''){
+            return redirect()->back()->withErrors('Product not found');
+        }
+
+
+        $product = Product::find($id);
+
+        if(!$product){
+            return redirect()->back()->withErrors('Product not found');
+        }
+
+        $users = Auth()->user()->id;
+
+        $cart = Cart::where('user_id',$users)->count();
+
+        return view('v1.product.edit',compact('product','cart'));
+
 
     }
 
@@ -46,9 +87,9 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
+    public function store(Request $request)
     {
-
+        // dd($request->all());
         // $postData = $request->only('file');
         //     $file = $postData['file'];
 
@@ -56,9 +97,10 @@ class ProductController extends Controller
 
 
         $validator = Validator::make($request->all(), [
-            'name' => ['required'],
-            'price' => ['required'],
-            'stock' => ['required'],
+            'name' => ['required','string'],
+            'price' => ['required','integer'],
+            'stock' => ['required','integer'],
+            'description' => ['required']
         ]);
 
         // dd($validator);
@@ -85,7 +127,7 @@ class ProductController extends Controller
             'image' => $nama_file,
             'price' => $request->price,
             'stock' => $request->stock,
-            'description' => $request->desc,
+            'description' => $request->description,
         ]);
 
         // dd($product);
@@ -93,10 +135,10 @@ class ProductController extends Controller
 
 
         if(!$product){
-            return redirect()->back()->withErrors('register failed');
+            return redirect()->back()->withErrors('Create Product Failed');
         }
 
-        return redirect()->back()->with(['success' => 'Registration Success']);
+        return redirect()->back()->with(['success' => 'Create Product Success']);
 
 
 
@@ -110,13 +152,16 @@ class ProductController extends Controller
      * @param  \App\Models\product  $product
      * @return \Illuminate\Http\Response
      */
-    public function edit(Request $request)
+    public function update(Request $request)
     {
+
+        // dd($request->all());
 
         $validator = Validator::make($request->all(), [
             'name' => ['required'],
             'price' => ['required'],
             'stock' => ['required'],
+            'description' => ['required']
         ]);
 
         // dd($validator);
@@ -138,7 +183,7 @@ class ProductController extends Controller
                 'name' => $request->name,
                 'price' => $request->price,
                 'stock' => $request->stock,
-                'description' => $request->desc,
+                'description' => $request->description,
             ]);
 
             // dd($product);
@@ -146,10 +191,10 @@ class ProductController extends Controller
 
 
             if(!$product){
-                return redirect()->back()->withErrors('register failed');
+                return redirect()->back()->withErrors('Edit Product Failed');
             }
 
-            return redirect()->back()->with(['success' => 'Registration Success']);
+            return redirect()->back()->with(['success' => 'Edit Product Success']);
         }
 
 
@@ -169,7 +214,7 @@ class ProductController extends Controller
                 'image' => $nama_file,
                 'price' => $request->price,
                 'stock' => $request->stock,
-                'description' => $request->desc,
+                'description' => $request->description,
             ]);
 
         // dd($product);
@@ -177,10 +222,10 @@ class ProductController extends Controller
 
 
         if(!$product){
-            return redirect()->back()->withErrors('register failed');
+            return redirect()->back()->withErrors('Edit Product Failed');
         }
 
-        return redirect()->back()->with(['success' => 'Registration Success']);
+        return redirect()->back()->with(['success' => 'Edit Product Success']);
 
 
 
