@@ -59,7 +59,8 @@
                 </div>
                 <div class="col-sm-9">
                     <form action="{{ url('profile/account/post') }}" method="POST">
-                  <p class="text-muted mb-0"><input style=" background: transparent;border: none;" type="text" class="form-control" value="{{$user->name}}"></p>
+                        <input type="hidden" name="id" value="{{ $user->id }}">
+                  <p class="text-muted mb-0"><input style=" background: transparent;border: none;" name="name" type="text" class="form-control" value="{{$user->name}}"></p>
                 </div>
               </div>
               <hr>
