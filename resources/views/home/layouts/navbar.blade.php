@@ -21,9 +21,9 @@
                         </svg><br>Profile
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="#!">Account</a></li>
+                        <li><a class="dropdown-item" href="{{ url('profile/account') }}">Account</a></li>
                         <li><hr class="dropdown-divider" /></li>
-                        <li><a class="dropdown-item" href="#!">Alamat</a></li>
+                        <li><a class="dropdown-item" href="{{ url('profile/address') }}">Alamat</a></li>
                     </ul>
                 </li>
 
@@ -167,9 +167,29 @@
                     @if (Auth()->user()->role == "admin" || Auth()->user()->role == "staff")
                     <li class="nav-item"><a class="nav-link active" aria-current="page" href="{{ url('admin/transaction') }}">Transaction</a></li>
                     <li class="nav-item"><a class="nav-link active" aria-current="page" href="{{ url('/admin/product') }}">Product</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link active dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                          Profile
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDarkDropdownMenuLink">
+                          <li><a class="dropdown-item" href="{{ url('profile/account')}}">Aaccount</a></li>
+                          <li><hr class="dropdown-divider" /></li>
+                          <li><a class="dropdown-item" href="{{ url('profile/address') }}">Address</a></li>
+                        </ul>
+                    </li>
                     <li class="nav-item"><a class="nav-link active"  type="submit" onclick="return confirm('yakin logout?');"  aria-current="page" href="{{ url('/logout') }}">Logout</a></li>
                     @else
                     <li class="nav-item"><a class="nav-link active" aria-current="page" href="{{ url('/transaction') }}">Transaction</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                          Dropdown
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDarkDropdownMenuLink">
+                          <li><a class="dropdown-item" href="{{ url('profile/account')}}">Aaccount</a></li>
+                          <li><hr class="dropdown-divider" /></li>
+                          <li><a class="dropdown-item" href="{{ url('profile/address') }}">Address</a></li>
+                        </ul>
+                    </li>
                     <li class="nav-item"><a class="nav-link active"  type="submit" onclick="return confirm('yakin logout?');"  aria-current="page" href="{{ url('/logout') }}">Logout</a></li>
 
                     @endif
@@ -193,7 +213,7 @@
                     <a class="btn btn-outline-dark" href="{{ url('cart') }}">
                         <i class="bi-cart-fill me-1"></i>
                         Cart
-                        <span class="badge bg-dark text-white ms-1 rounded-pill">{{ $cart }}</span>
+                        <span class="badge bg-dark text-white ms-1 rounded-pill">{{ App\Models\Cart::where('user_id',auth()->user()->id)->count(); }}</span>
                     </a>
                     @else
                     <button style="margin-right:10px " class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#login">

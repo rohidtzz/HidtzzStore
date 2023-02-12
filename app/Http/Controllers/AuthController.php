@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 use App\Models\User;
 
+use App\Models\Address;
+
 use Auth;
 
 use Validator;
@@ -44,7 +46,16 @@ class AuthController extends Controller
             'role' => 'user'
         ]);
 
-        if(!$users){
+        $address = Address::create([
+            'city_id' => null,
+            'province_id' => null,
+            'name' => null,
+            'alamat' => null,
+            'kode_pos' => null,
+            'user_id' => $users->id,
+        ]);
+
+        if(!$users || !$address){
             return redirect('/')->with('errors', 'Register Failed');
         }
 

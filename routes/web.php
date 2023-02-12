@@ -18,6 +18,8 @@ use App\Http\Controllers\DuitkuController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\LayananDigitalController;
 
+use App\Http\Controllers\ProfileController;
+
 use Illuminate\Http\Request;
 
 /*
@@ -92,6 +94,11 @@ Route::group(['middleware' => ['role:user,staff,admin']], function () {
 
 
     route::get('/kalkulator/{amount}', [DuitkuController::class,'KalkulatorBiaya']);
+
+    Route::get('/profile/account',[ProfileController::class,'user']);
+    Route::post('/profile/account/post',[ProfileController::class,'user_post']);
+
+    Route::get('/profile/address',[ProfileController::class,'address']);
 
 
 
